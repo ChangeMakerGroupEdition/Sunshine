@@ -1,4 +1,4 @@
-# myapp
+# Shine
 
 A new Flutter project.
 
