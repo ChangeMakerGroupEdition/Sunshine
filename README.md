@@ -10,9 +10,9 @@ Frontend
 
 Backend 
 
-- Get http response from the website
-- Create custom data model 
-- Parse it into the data model
+- <s>Get http response from the website</s>
+- <s>Create custom data model</s>
+- <s>Parse it into the data model</s> 
 - Get http response every hour
 
 - Calculations for graph plotting

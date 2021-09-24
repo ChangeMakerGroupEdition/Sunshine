@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
-
+import 'package:flutter/services.dart';
+import 'package:myapp/service/data_model.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -29,8 +31,15 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  late Future<DataModel> data;
 
+  @override
+  void initState() {
+    super.initState();
+    data = fetchData();
+  }
+
+  int _counter = 0;
   void _incrementCounter() {
     setState(() {
       _counter++;
@@ -54,6 +63,17 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
+            FutureBuilder<DataModel>(
+              future: data,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Text(snapshot.data!.title + "\nValue of DIFF+DNR = " + (snapshot.data!.dailyDIFF + snapshot.data!.dailyDNR).toString());
+                } else if (snapshot.hasError) {
+                  return Text("${snapshot.error}");
+                }
+                return const CircularProgressIndicator();
+              } 
+            )
           ],
         ),
       ),
