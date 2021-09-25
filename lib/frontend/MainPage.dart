@@ -1,6 +1,8 @@
 // ignore_for_file: camel_case_types
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(const my_app());
@@ -28,6 +30,7 @@ class home_page extends StatefulWidget {
 }
 
 class _home_page extends State<home_page> {
+  final style = const TextStyle(fontWeight: FontWeight.bold);
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -56,14 +59,17 @@ class _home_page extends State<home_page> {
                     padding: const EdgeInsets.all(30),
                     child: Column(
                       children: <Widget>[
-                        Row(children: const <Widget>[
+                        Row(children: <Widget>[
                           Expanded(
                             child: Text(
                               'Solar Irradiance',
+                              style: GoogleFonts.nunitoSans(
+                                  textStyle: style,
+                                  fontStyle: FontStyle.normal),
                               textAlign: TextAlign.left,
                             ),
                           ),
-                          Expanded(
+                          const Expanded(
                             child: ExpansionTile(
                               title: Text('Time'),
                               children: <Widget>[
@@ -75,7 +81,6 @@ class _home_page extends State<home_page> {
                         ]),
                       ],
                     ))),
-                    
           ],
         ),
       ),
