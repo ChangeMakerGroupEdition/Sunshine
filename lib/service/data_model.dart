@@ -95,54 +95,26 @@ class YearRangeDataset {
       }
     } 
   }
-}
-
-class YearRangeData{
-  final double jan;
-  final double feb;
-  final double mar;
-  final double apr;
-  final double may;
-  final double jun;
-  final double jul;
-  final double aug;
-  final double sep;
-  final double oct;
-  final double nov;
-  final double dec;
-  final double mean;
-
-  YearRangeData({
-    required this.jan,
-    required this.feb,
-    required this.mar,
-    required this.apr,
-    required this.may,
-    required this.jun,
-    required this.jul,
-    required this.aug,
-    required this.sep,
-    required this.oct,
-    required this.nov,
-    required this.dec,
-    required this.mean,
-  });
   
-  factory YearRangeData.fromJson(Map<String, dynamic> json, String year) {
-    return YearRangeData(
-      jan: json[year+"01"],
-      feb: json[year+"02"],
-      mar: json[year+"03"],
-      apr: json[year+"04"],
-      may: json[year+"05"],
-      jun: json[year+"06"],
-      jul: json[year+"07"],
-      aug: json[year+"08"],
-      sep: json[year+"09"],
-      oct: json[year+"10"],
-      nov: json[year+"11"],
-      dec: json[year+"12"],
-      mean: json[year+"13"]
-    );
+  List<double> getLastYearGraph(String type) {
+    switch(type) {
+      case "cloud": {
+        List<double> lastYear = [];
+        for (var i = 1; i <= 12; i++) {
+          lastYear.add(yearCloudAmount.values[yearCloudAmount.values.length-i-1]);
+        }
+        return lastYear;
+      }  
+      case "solar": {
+        List<double> lastYear = [];
+        for (var i = 1; i <= 12; i++) {
+          lastYear.add(yearDNI.values[yearDNI.values.length-i-1]+yearDIFF.values[yearDIFF.values.length-i-1]);
+        }
+        return lastYear;
+      }
+      default: {
+        return [];
+      }
+    } 
   }
 }

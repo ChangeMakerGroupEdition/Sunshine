@@ -86,8 +86,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 if (snapshot.hasData) {
                   return Column(
                     children: [
-                      Text("Solar irradiation of Last Five Years" + snapshot.data!.getFiveYearGraph("solar").toString()),
-                      Text("Cloud Amount of Last Five Years" + snapshot.data!.getFiveYearGraph("cloud").toString()),
+                      Text("Solar irradiation of Last Five Years" + snapshot.data!.getLastYearGraph("solar").toString()),
+                      Text("Cloud Amount of Last Five Years" + snapshot.data!.getLastYearGraph("cloud").toString()),
                     ],
                   );
                 } else if (snapshot.hasError) {
