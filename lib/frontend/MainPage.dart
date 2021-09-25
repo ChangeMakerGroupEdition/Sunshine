@@ -28,20 +28,35 @@ class home_page extends StatefulWidget {
 }
 
 class _home_page extends State<home_page> {
-
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: const Color.fromRGBO(11, 19, 40, 100),
-      body: Center(
+      body: SingleChildScrollView(
+        physics:  const BouncingScrollPhysics(),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
+          children: <Widget>[
+            Container(
+              width: double.infinity,
+              height: size.height *0.5,
+              decoration: const BoxDecoration(
+                image: DecorationImage(image: AssetImage("assets/images/solar_panel.png"))
+              ),
+            ),
+            Container(
+              margin:  EdgeInsets.only(top: size.height * 0.45),
+              width: double.infinity,
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
+              color: Colors.blueGrey,
+              child: Column(
+                children: const <Widget>[]
+              )
+            )
           ],
         ),
       ),
-    
-      );
-
+    );
   }
 }
