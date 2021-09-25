@@ -1,11 +1,13 @@
+// ignore_for_file: camel_case_types
+
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const my_app());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class my_app extends StatelessWidget {
+  const my_app({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -13,19 +15,19 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Shine',
       theme: ThemeData(),
-      home: const MyHomePage(),
+      home: const home_page(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+class home_page extends StatefulWidget {
+  const home_page({Key? key}) : super(key: key);
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<home_page> createState() => _home_page();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _home_page extends State<home_page> {
 
   @override
   Widget build(BuildContext context) {

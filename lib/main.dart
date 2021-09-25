@@ -9,7 +9,7 @@ void main(){
   runApp(MaterialApp(
     initialRoute: '/mainpage',
     routes: {
-      '/mainpage':(context) => const MyApp(),
+      '/mainpage':(context) => const my_app(),
       '/panel':(context) => const ChangePanel(),
       '/graph':(context) => const PlotGraph(),
 
