@@ -31,12 +31,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late Future<DataModel> data;
+  late Future<YearRangeDataset> data;
 
   @override
   void initState() {
     super.initState();
-    data = fetchData();
+    data = fetchFiveYearData();
   }
 
   int _counter = 0;
@@ -63,11 +63,33 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
-            FutureBuilder<DataModel>(
+            FutureBuilder<YearRangeDataset>(
               future: data,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  return Text(snapshot.data!.title + "\nValue of DIFF+DNR = " + (snapshot.data!.dailyDIFF + snapshot.data!.dailyDNR).toString());
+                  return Column(
+                    children: [
+                      Text("DNI value of Last Five Years" + snapshot.data!.yearCloudAmount.values.toString()),
+                      Text("DIFF value of Last Five Years" + snapshot.data!.yearDNI.values.toString()),
+                      Text("Cloud Amount of Last Five Years" + snapshot.data!.yearDIFF.values.toString()),
+                    ],
+                  );
+                } else if (snapshot.hasError) {
+                  return Text("${snapshot.error}");
+                }
+                return const CircularProgressIndicator();
+              } 
+            ),
+            FutureBuilder<YearRangeDataset>(
+              future: data,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Column(
+                    children: [
+                      Text("Solar irradiation of Last Five Years" + snapshot.data!.getFiveYearGraph("solar").toString()),
+                      Text("Cloud Amount of Last Five Years" + snapshot.data!.getFiveYearGraph("cloud").toString()),
+                    ],
+                  );
                 } else if (snapshot.hasError) {
                   return Text("${snapshot.error}");
                 }
