@@ -34,26 +34,48 @@ class _home_page extends State<home_page> {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(11, 19, 40, 100),
       body: SingleChildScrollView(
-        physics:  const BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
               width: double.infinity,
-              height: size.height *0.5,
+              height: size.height * 0.35,
               decoration: const BoxDecoration(
-                image: DecorationImage(image: AssetImage("assets/images/solar_panel.png"))
-              ),
+                  image: DecorationImage(
+                      image: AssetImage("assets/images/solar_panel.png"))),
             ),
             Container(
-              margin:  EdgeInsets.only(top: size.height * 0.45),
-              width: double.infinity,
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
-              color: Colors.blueGrey,
-              child: Column(
-                children: const <Widget>[]
-              )
-            )
+                // margin: EdgeInsets.only(top: size.height * 0.5),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  color: Colors.blueGrey,
+                ),
+                child: Padding(
+                    padding: const EdgeInsets.all(30),
+                    child: Column(
+                      children: <Widget>[
+                        Row(children: const <Widget>[
+                          Expanded(
+                            child: Text(
+                              'Solar Irradiance',
+                              textAlign: TextAlign.left,
+                            ),
+                          ),
+                          Expanded(
+                            child: ExpansionTile(
+                              title: Text('Time'),
+                              children: <Widget>[
+                                ListTile(title: Text('Year')),
+                                ListTile(title: Text('Daily'))
+                              ],
+                            ),
+                          ),
+                        ]),
+                      ],
+                    ))),
+                    
           ],
         ),
       ),
