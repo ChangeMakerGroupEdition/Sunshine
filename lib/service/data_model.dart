@@ -50,7 +50,14 @@ class DataModel {
   factory DataModel.fromJson(Map<String, dynamic> json) {
     List<String> dates = [];
     List<double> values = [];
-    json.forEach((key, value) { dates.add(key); values.add(value);});
+    json.forEach((key, value) {
+      dates.add(key); 
+      if (value == -999.0) {
+        values.add(0.0); 
+      } else {
+        values.add(value); 
+      }
+    });
     return DataModel(dates: dates, values: values);
   }
 }
