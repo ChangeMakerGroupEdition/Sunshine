@@ -7,7 +7,7 @@ void main(){
   runApp(MaterialApp(
     initialRoute: '/mainpage',
     routes: {
-      '/mainpage':(context) => const my_app(),
+      '/mainpage':(context) => const MyApp(),
     },
   ),
   );
