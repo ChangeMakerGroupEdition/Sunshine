@@ -172,7 +172,7 @@ class _home_page extends State<home_page> {
                           ]),
                         ),
                         AspectRatio(
-                          aspectRatio: 1.25,
+                          aspectRatio: 1.20,
                           child: Container(
                             decoration: const BoxDecoration(
                               gradient: LinearGradient(
@@ -188,7 +188,7 @@ class _home_page extends State<home_page> {
                             ),
                             child: Padding(
                               padding: const EdgeInsets.only(
-                                  right: 18.0, left: 12.0, top: 24, bottom: 12),
+                                  right: 10.0, left: 10.0, top: 20, bottom: 12),
                               child: LineChart(
                                 showAvg ? avgData() : mainData(),
                               ),
@@ -485,11 +485,11 @@ class _home_page extends State<home_page> {
           getTitles: (value) {
             switch (value.toInt()) {
               case 1:
-                return '10k';
+                return '10kWh';
               case 3:
-                return '30k';
+                return '30kWh';
               case 5:
-                return '50k';
+                return '50kWh';
             }
             return '';
           },
