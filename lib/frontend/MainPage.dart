@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:myapp/frontend/DetailsScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -57,13 +58,41 @@ class _home_page extends State<home_page> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            SizedBox(height: 25),
-            Text("Your Dashboard",
-                style: TextStyle(
-                    fontSize: 22,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold)),
-            SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: 25, right: 20, bottom: 5, top: 25),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Your Dashboard',
+                      style: TextStyle(
+                          fontSize: 24,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold)),
+                  RawMaterialButton(
+                      onPressed: (){
+                        Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => DetailsScreen())
+                        );
+                      },
+                      elevation: 2.0,
+                      padding: EdgeInsets.all(8),
+                      shape: CircleBorder(),
+                      fillColor: Colors.white30,
+                      child:
+                        Icon(Icons.info_outline_rounded, color: Colors.white))
+                ],
+              ),
+            ),
+
+            // SizedBox(height: 25),
+            // Text("Your Dashboard",
+            //     style: TextStyle(
+            //         fontSize: 22,
+            //         color: Colors.white,
+            //         fontWeight: FontWeight.bold)),
+            // SizedBox(height: 10),
             Container(
               width: double.infinity,
               height: size.height * 0.35,
@@ -71,11 +100,32 @@ class _home_page extends State<home_page> {
                   image: DecorationImage(
                       image: AssetImage("assets/images/intropic.png"))),
             ),
-            Text("Bintulu, Sarawak",
-                style: TextStyle(
-                    fontSize: 19,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold)),
+            // Text("Bintulu, Sarawak",
+            //     style: TextStyle(
+            //         fontSize: 19,
+            //         color: Colors.white,
+            //         fontWeight: FontWeight.bold)),
+            Container(
+              width: double.infinity,
+              margin: EdgeInsets.symmetric(
+                vertical: 8,
+                horizontal: 100,
+              ),
+              child: RaisedButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(40),
+                ),
+                child: Text(
+                  'Bintulu, Sarawak',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                  ),
+                ),
+                color: Colors.white,
+                onPressed: () {},
+              ),
+            ),
             SizedBox(height: 15),
             Container(
                 // margin: EdgeInsets.only(top: size.height * 0.5),
@@ -419,7 +469,6 @@ class _home_page extends State<home_page> {
                           ],
                         ),
                         SizedBox(height: 15),
-                      
                         Container(
                             width: 350,
                             height: 350,
