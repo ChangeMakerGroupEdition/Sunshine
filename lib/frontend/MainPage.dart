@@ -175,147 +175,228 @@ class _home_page extends State<home_page> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                          
-                        Expanded(
-                        child: Center(
-                          child: Wrap(spacing: 20.0,
-                          runSpacing: 20.0,
-                          children: [
-                            SizedBox(
-                              width: 160.0,
-                              height: 160.0,
-                              child: Card(
-                                color: Colors.white,
-                                elevation: 2.0,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.0)
-                                ),
-                                child: Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      children: [
-                                        Image.asset("assets/images/wind.png", width: 64.0,),
-                                        SizedBox(height: 10.0,),
-                                        Text("Wind Speed", style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize:20.0
-                                        )),
-                                        SizedBox(height: 5.0,),
-                                        Text("69 k/s", style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w400
-                                        ))
-                                      ],
+                            Expanded(
+                              child: Center(
+                                child: Wrap(
+                                  spacing: 20.0,
+                                  runSpacing: 20.0,
+                                  children: [
+                                    Container(
+                                      decoration: const BoxDecoration(
+                                        gradient: LinearGradient(
+                                          begin: Alignment.topCenter,
+                                          end: Alignment.bottomCenter,
+                                          stops: [0.1, 0.4, 0.7, 0.9],
+                                          colors: [
+                                            Color(0xFF3594DD),
+                                            Color(0xFF4563DB),
+                                            Color(0xFF5036D5),
+                                            Color(0xFF5B16D0),
+                                          ],
+                                        ),
+                                      ),
+                                      width: 160.0,
+                                      height: 160.0,
+                                      child: Card(
+                                          elevation: 2.0,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0)),
+                                          child: Center(
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Column(
+                                                children: [
+                                                  Image.asset(
+                                                    "assets/images/wind.png",
+                                                    width: 64.0,
+                                                  ),
+                                                  SizedBox(
+                                                    height: 10.0,
+                                                  ),
+                                                  Text("Wind Speed",
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 20.0)),
+                                                  SizedBox(
+                                                    height: 5.0,
+                                                  ),
+                                                  Text("69 k/s",
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.w400))
+                                                ],
+                                              ),
+                                            ),
+                                          )),
                                     ),
-                                  ),
-                                  
-                                )
+                                    Container(
+                                      decoration: const BoxDecoration(
+                                        gradient: LinearGradient(
+                                          begin: Alignment.topCenter,
+                                          end: Alignment.bottomCenter,
+                                          stops: [0.1, 0.4, 0.7, 0.9],
+                                          colors: [
+                                            Color(0xFF3594DD),
+                                            Color(0xFF4563DB),
+                                            Color(0xFF5036D5),
+                                            Color(0xFF5B16D0),
+                                          ],
+                                        ),
+                                      ),
+                                      width: 160.0,
+                                      height: 160.0,
+                                      child: Card(
+                                          elevation: 2.0,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0)),
+                                          child: Center(
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Column(
+                                                children: [
+                                                  Image.asset(
+                                                    "assets/images/temperature.png",
+                                                    width: 64.0,
+                                                  ),
+                                                  SizedBox(
+                                                    height: 10.0,
+                                                  ),
+                                                  Text("Temperature",
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 20.0)),
+                                                  SizedBox(
+                                                    height: 5.0,
+                                                  ),
+                                                  Text("69 k/s",
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.w400))
+                                                ],
+                                              ),
+                                            ),
+                                          )),
+                                    ),
+                                    Container(
+                                      decoration: const BoxDecoration(
+                                        gradient: LinearGradient(
+                                          begin: Alignment.topCenter,
+                                          end: Alignment.bottomCenter,
+                                          stops: [0.1, 0.4, 0.7, 0.9],
+                                          colors: [
+                                            Color(0xFF3594DD),
+                                            Color(0xFF4563DB),
+                                            Color(0xFF5036D5),
+                                            Color(0xFF5B16D0),
+                                          ],
+                                        ),
+                                      ),
+                                      width: 160.0,
+                                      height: 160.0,
+                                      child: Card(
+                                          elevation: 2.0,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0)),
+                                          child: Center(
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Column(
+                                                children: [
+                                                  Image.asset(
+                                                    "assets/images/water.png",
+                                                    width: 64.0,
+                                                  ),
+                                                  SizedBox(
+                                                    height: 10.0,
+                                                  ),
+                                                  Text("Humidity",
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 20.0)),
+                                                  SizedBox(
+                                                    height: 5.0,
+                                                  ),
+                                                  Text("69 k/s",
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.w400))
+                                                ],
+                                              ),
+                                            ),
+                                          )),
+                                    ),
+                                    Container(
+                                      decoration: const BoxDecoration(
+                                        gradient: LinearGradient(
+                                          begin: Alignment.topCenter,
+                                          end: Alignment.bottomCenter,
+                                          stops: [0.1, 0.4, 0.7, 0.9],
+                                          colors: [
+                                            Color(0xFF3594DD),
+                                            Color(0xFF4563DB),
+                                            Color(0xFF5036D5),
+                                            Color(0xFF5B16D0),
+                                          ],
+                                        ),
+                                      ),
+                                      width: 160.0,
+                                      height: 160.0,
+                                      child: Card(
+                                          elevation: 2.0,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0)),
+                                          child: Center(
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Column(
+                                                children: [
+                                                  Image.asset(
+                                                    "assets/images/wind.png",
+                                                    width: 64.0,
+                                                  ),
+                                                  SizedBox(
+                                                    height: 10.0,
+                                                  ),
+                                                  Text("Wind Speed",
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 20.0)),
+                                                  SizedBox(
+                                                    height: 5.0,
+                                                  ),
+                                                  Text("69 k/s",
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.w400))
+                                                ],
+                                              ),
+                                            ),
+                                          )),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
-                            SizedBox(
-                              width: 160.0,
-                              height: 160.0,
-                              child: Card(
-                                color: Colors.white,
-                                elevation: 2.0,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.0)
-                                ),
-                                child: Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      children: [
-                                        Image.asset("assets/images/temperature.png", width: 64.0,),
-                                        SizedBox(height: 10.0,),
-                                        Text("Temperature", style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize:20.0
-                                        )),
-                                        SizedBox(height: 5.0,),
-                                        Text("69 k/s", style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w400
-                                        ))
-                                      ],
-                                    ),
-                                  ),
-                                  
-                                )
-                              ),
-                            ),
-                            SizedBox(
-                              width: 160.0,
-                              height: 160.0,
-                              child: Card(
-                                color: Colors.white,
-                                elevation: 2.0,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.0)
-                                ),
-                                child: Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      children: [
-                                        Image.asset("assets/images/water.png", width: 64.0,),
-                                        SizedBox(height: 10.0,),
-                                        Text("Humidity", style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize:20.0
-                                        )),
-                                        SizedBox(height: 5.0,),
-                                        Text("69 k/s", style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w400
-                                        ))
-                                      ],
-                                    ),
-                                  ),
-                                  
-                                )
-                              ),
-                            ),
-                            SizedBox(
-                              width: 160.0,
-                              height: 160.0,
-                              child: Card(
-                                color: Colors.white,
-                                elevation: 2.0,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.0)
-                                ),
-                                child: Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      children: [
-                                        Image.asset("assets/images/wind.png", width: 64.0,),
-                                        SizedBox(height: 10.0,),
-                                        Text("Wind Speed", style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize:20.0
-                                        )),
-                                        SizedBox(height: 5.0,),
-                                        Text("69 k/s", style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w400
-                                        ))
-                                      ],
-                                    ),
-                                  ),
-                                )
-                              ),
-                            )
-                          ],),
-                        ),
-                        ),
-                          
                           ],
                         ),
                         SizedBox(
@@ -346,7 +427,7 @@ class _home_page extends State<home_page> {
                             child: Card(
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(18)),
-                              color: Color.fromRGBO(43, 28, 154,100),
+                              color: Color.fromRGBO(43, 28, 154, 100),
                               child: Stack(
                                 children: <Widget>[
                                   Padding(
