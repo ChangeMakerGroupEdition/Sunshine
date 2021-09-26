@@ -145,32 +145,7 @@ class _home_page extends State<home_page> {
                                         )
                                       ]))),
                         ]),
-                        Container(
-                          height: 144,
-                          margin: EdgeInsets.only(left: 16, right: 16),
-                          child: Column(children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                Container(
-                                  margin: EdgeInsets.only(right: 8),
-                                  padding: EdgeInsets.only(left: 8),
-                                  height: 64,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(12),
-                                    border: Border.all(
-                                        color: Colors.white, width: 1),
-                                  ),
-                                  child: Row(
-                                    children: <Widget>[
-                                      // TO-DO: Continue the Widget for Humidity~
-                                    ],
-                                  ),
-                                )
-                              ],
-                            )
-                          ]),
-                        ),
+                        SizedBox(height: 15),
                         AspectRatio(
                           aspectRatio: 1.20,
                           child: Container(
@@ -194,6 +169,154 @@ class _home_page extends State<home_page> {
                               ),
                             ),
                           ),
+                        ),
+                        SizedBox(height: 15),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                          
+                        Expanded(
+                        child: Center(
+                          child: Wrap(spacing: 20.0,
+                          runSpacing: 20.0,
+                          children: [
+                            SizedBox(
+                              width: 160.0,
+                              height: 160.0,
+                              child: Card(
+                                color: Colors.white,
+                                elevation: 2.0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0)
+                                ),
+                                child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      children: [
+                                        Image.asset("assets/images/wind.png", width: 64.0,),
+                                        SizedBox(height: 10.0,),
+                                        Text("Wind Speed", style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize:20.0
+                                        )),
+                                        SizedBox(height: 5.0,),
+                                        Text("69 k/s", style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w400
+                                        ))
+                                      ],
+                                    ),
+                                  ),
+                                  
+                                )
+                              ),
+                            ),
+                            SizedBox(
+                              width: 160.0,
+                              height: 160.0,
+                              child: Card(
+                                color: Colors.white,
+                                elevation: 2.0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0)
+                                ),
+                                child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      children: [
+                                        Image.asset("assets/images/temperature.png", width: 64.0,),
+                                        SizedBox(height: 10.0,),
+                                        Text("Temperature", style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize:20.0
+                                        )),
+                                        SizedBox(height: 5.0,),
+                                        Text("69 k/s", style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w400
+                                        ))
+                                      ],
+                                    ),
+                                  ),
+                                  
+                                )
+                              ),
+                            ),
+                            SizedBox(
+                              width: 160.0,
+                              height: 160.0,
+                              child: Card(
+                                color: Colors.white,
+                                elevation: 2.0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0)
+                                ),
+                                child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      children: [
+                                        Image.asset("assets/images/water.png", width: 64.0,),
+                                        SizedBox(height: 10.0,),
+                                        Text("Humidity", style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize:20.0
+                                        )),
+                                        SizedBox(height: 5.0,),
+                                        Text("69 k/s", style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w400
+                                        ))
+                                      ],
+                                    ),
+                                  ),
+                                  
+                                )
+                              ),
+                            ),
+                            SizedBox(
+                              width: 160.0,
+                              height: 160.0,
+                              child: Card(
+                                color: Colors.white,
+                                elevation: 2.0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0)
+                                ),
+                                child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      children: [
+                                        Image.asset("assets/images/wind.png", width: 64.0,),
+                                        SizedBox(height: 10.0,),
+                                        Text("Wind Speed", style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize:20.0
+                                        )),
+                                        SizedBox(height: 5.0,),
+                                        Text("69 k/s", style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w400
+                                        ))
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              ),
+                            )
+                          ],),
+                        ),
+                        ),
+                          
+                          ],
                         ),
                         SizedBox(
                           width: 60,
