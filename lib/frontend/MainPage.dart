@@ -170,6 +170,25 @@ class _home_page extends State<home_page> {
                             ),
                           ),
                         ),
+                        SizedBox(
+                          width: 60,
+                          height: 34,
+                          child: TextButton(
+                            onPressed: () {
+                              setState(() {
+                                showAvg = !showAvg;
+                              });
+                            },
+                            child: Text(
+                              'avg',
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  color: showAvg
+                                      ? Colors.white.withOpacity(0.5)
+                                      : Colors.white),
+                            ),
+                          ),
+                        ),
                         SizedBox(height: 15),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -399,25 +418,8 @@ class _home_page extends State<home_page> {
                             ),
                           ],
                         ),
-                        SizedBox(
-                          width: 60,
-                          height: 34,
-                          child: TextButton(
-                            onPressed: () {
-                              setState(() {
-                                showAvg = !showAvg;
-                              });
-                            },
-                            child: Text(
-                              'avg',
-                              style: TextStyle(
-                                  fontSize: 12,
-                                  color: showAvg
-                                      ? Colors.white.withOpacity(0.5)
-                                      : Colors.white),
-                            ),
-                          ),
-                        ),
+                        SizedBox(height: 15),
+                      
                         Container(
                             width: 350,
                             height: 350,
