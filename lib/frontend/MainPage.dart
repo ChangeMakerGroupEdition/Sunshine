@@ -95,7 +95,7 @@ class _home_page extends State<home_page> {
             // SizedBox(height: 10),
             Container(
               width: double.infinity,
-              height: size.height * 0.35,
+              height: size.height * 0.33,
               decoration: const BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage("assets/images/intropic.png"))),
@@ -106,6 +106,7 @@ class _home_page extends State<home_page> {
             //         color: Colors.white,
             //         fontWeight: FontWeight.bold)),
             Container(
+              height: 32,
               width: double.infinity,
               margin: EdgeInsets.symmetric(
                 vertical: 8,
