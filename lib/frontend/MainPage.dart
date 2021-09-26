@@ -224,7 +224,7 @@ class _home_page extends State<home_page> {
                                                   SizedBox(
                                                     height: 5.0,
                                                   ),
-                                                  Text("69 k/s",
+                                                  Text("69 mph",
                                                       style: TextStyle(
                                                           color: Colors.black,
                                                           fontWeight:
@@ -277,7 +277,7 @@ class _home_page extends State<home_page> {
                                                   SizedBox(
                                                     height: 5.0,
                                                   ),
-                                                  Text("69 k/s",
+                                                  Text("69°C",
                                                       style: TextStyle(
                                                           color: Colors.black,
                                                           fontWeight:
@@ -330,7 +330,7 @@ class _home_page extends State<home_page> {
                                                   SizedBox(
                                                     height: 5.0,
                                                   ),
-                                                  Text("69 k/s",
+                                                  Text("69 g/kg",
                                                       style: TextStyle(
                                                           color: Colors.black,
                                                           fontWeight:
@@ -368,13 +368,13 @@ class _home_page extends State<home_page> {
                                               child: Column(
                                                 children: [
                                                   Image.asset(
-                                                    "assets/images/wind.png",
+                                                    "assets/images/uv.png",
                                                     width: 64.0,
                                                   ),
                                                   SizedBox(
                                                     height: 10.0,
                                                   ),
-                                                  Text("Wind Speed",
+                                                  Text("UV Index",
                                                       style: TextStyle(
                                                           color: Colors.black,
                                                           fontWeight:
@@ -383,7 +383,7 @@ class _home_page extends State<home_page> {
                                                   SizedBox(
                                                     height: 5.0,
                                                   ),
-                                                  Text("69 k/s",
+                                                  Text("69 mW/cm2",
                                                       style: TextStyle(
                                                           color: Colors.black,
                                                           fontWeight:
