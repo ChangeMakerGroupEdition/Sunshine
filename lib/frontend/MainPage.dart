@@ -52,484 +52,468 @@ class _home_page extends State<home_page> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(15, 34, 97, 100),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: 25, right: 20, bottom: 5, top: 25),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Your Dashboard',
-                      style: TextStyle(
-                          fontSize: 24,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold)),
-                  RawMaterialButton(
-                      onPressed: (){
-                        Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => DetailsScreen())
-                        );
-                      },
-                      elevation: 2.0,
-                      padding: EdgeInsets.all(8),
-                      shape: CircleBorder(),
-                      fillColor: Colors.white30,
-                      child:
-                        Icon(Icons.info_outline_rounded, color: Colors.white))
-                ],
-              ),
-            ),
-
-            // SizedBox(height: 25),
-            // Text("Your Dashboard",
-            //     style: TextStyle(
-            //         fontSize: 22,
-            //         color: Colors.white,
-            //         fontWeight: FontWeight.bold)),
-            // SizedBox(height: 10),
-            Container(
-              width: double.infinity,
-              height: size.height * 0.33,
-              decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage("assets/images/intropic.png"))),
-            ),
-            // Text("Bintulu, Sarawak",
-            //     style: TextStyle(
-            //         fontSize: 19,
-            //         color: Colors.white,
-            //         fontWeight: FontWeight.bold)),
-            Container(
-              height: 32,
-              width: double.infinity,
-              margin: EdgeInsets.symmetric(
-                vertical: 8,
-                horizontal: 100,
-              ),
-              child: RaisedButton(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(40),
-                ),
-                child: Text(
-                  'Bintulu, Sarawak',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
+        backgroundColor: const Color.fromRGBO(15, 34, 97, 100),
+        body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: SafeArea(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 25, right: 20, bottom: 5, top: 25),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Your Dashboard',
+                          style: TextStyle(
+                              fontSize: 24,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold)),
+                      RawMaterialButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => DetailsScreen()));
+                          },
+                          elevation: 2.0,
+                          padding: EdgeInsets.all(8),
+                          shape: CircleBorder(),
+                          fillColor: Colors.white30,
+                          child: Icon(Icons.info_outline_rounded,
+                              color: Colors.white))
+                    ],
                   ),
                 ),
-                color: Colors.white,
-                onPressed: () {},
-              ),
-            ),
-            SizedBox(height: 15),
-            Container(
-                // margin: EdgeInsets.only(top: size.height * 0.5),
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
-                  color: const Color.fromRGBO(26, 57, 140, 100),
+
+                // SizedBox(height: 25),
+                // Text("Your Dashboard",
+                //     style: TextStyle(
+                //         fontSize: 22,
+                //         color: Colors.white,
+                //         fontWeight: FontWeight.bold)),
+                // SizedBox(height: 10),
+                Container(
+                  width: double.infinity,
+                  height: size.height * 0.35,
+                  decoration: const BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage("assets/images/intropic.png"))),
                 ),
-                child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      children: <Widget>[
-                        Row(children: <Widget>[
-                          Expanded(
-                            child: Text(
-                              'Solar Irradiance',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                  color: Colors.white),
-                              textAlign: TextAlign.left,
-                            ),
-                          ),
-                          Expanded(
-                              child: Align(
-                                  alignment: Alignment.topRight,
-                                  child: ToggleButtons(
-                                      fillColor: Colors.lightBlue,
-                                      selectedColor: Colors.blueAccent,
-                                      borderRadius: BorderRadius.circular(20),
-                                      isSelected: isSelected,
-                                      onPressed: (int index) {
-                                        setState(() {
-                                          for (int buttonIndex = 0;
-                                              buttonIndex < isSelected.length;
-                                              buttonIndex++) {
-                                            if (buttonIndex == index) {
-                                              isSelected[buttonIndex] = true;
-                                            } else {
-                                              isSelected[buttonIndex] = false;
-                                            }
-                                          }
-                                        });
-                                      },
-                                      children: const <Widget>[
-                                        Padding(
-                                          padding: EdgeInsets.all(15.0),
-                                          child: Text(
-                                            "Daily",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 15,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.all(15.0),
-                                          child: Text(
-                                            "Yearly",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 15,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        )
-                                      ]))),
-                        ]),
-                        SizedBox(height: 15),
-                        AspectRatio(
-                          aspectRatio: 1.20,
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: [
-                                    Color.fromRGBO(57, 19, 178, 100),
-                                    Color.fromRGBO(52, 28, 255, 100)
-                                  ]),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(18),
-                              ),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  right: 10.0, left: 10.0, top: 20, bottom: 12),
-                              child: LineChart(
-                                showAvg ? avgData() : mainData(),
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 60,
-                          height: 34,
-                          child: TextButton(
-                            onPressed: () {
-                              setState(() {
-                                showAvg = !showAvg;
-                              });
-                            },
-                            child: Text(
-                              'avg',
-                              style: TextStyle(
-                                  fontSize: 12,
-                                  color: showAvg
-                                      ? Colors.white.withOpacity(0.5)
-                                      : Colors.white),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 15),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                // Text("Bintulu, Sarawak",
+                //     style: TextStyle(
+                //         fontSize: 19,
+                //         color: Colors.white,
+                //         fontWeight: FontWeight.bold)),
+                Container(
+                  width: double.infinity,
+                  margin: EdgeInsets.symmetric(
+                    vertical: 8,
+                    horizontal: 100,
+                  ),
+                  child: RaisedButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(40),
+                    ),
+                    child: Text(
+                      'Bintulu, Sarawak',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                      ),
+                    ),
+                    color: Colors.white,
+                    onPressed: () {},
+                  ),
+                ),
+                SizedBox(height: 15),
+                Container(
+                    // margin: EdgeInsets.only(top: size.height * 0.5),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      color: const Color.fromRGBO(26, 57, 140, 100),
+                    ),
+                    child: Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: Column(
                           children: <Widget>[
-                            Expanded(
-                              child: Center(
-                                child: Wrap(
-                                  spacing: 20.0,
-                                  runSpacing: 20.0,
-                                  children: [
-                                    Container(
-                                      decoration: const BoxDecoration(
-                                        gradient: LinearGradient(
-                                          begin: Alignment.topCenter,
-                                          end: Alignment.bottomCenter,
-                                          stops: [0.1, 0.4, 0.7, 0.9],
-                                          colors: [
-                                            Color(0xFF3594DD),
-                                            Color(0xFF4563DB),
-                                            Color(0xFF5036D5),
-                                            Color(0xFF5B16D0),
-                                          ],
-                                        ),
-                                      ),
-                                      width: 160.0,
-                                      height: 160.0,
-                                      child: Card(
-                                          elevation: 2.0,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0)),
-                                          child: Center(
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Column(
-                                                children: [
-                                                  Image.asset(
-                                                    "assets/images/wind.png",
-                                                    width: 64.0,
-                                                  ),
-                                                  SizedBox(
-                                                    height: 10.0,
-                                                  ),
-                                                  Text("Wind Speed",
-                                                      style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 20.0)),
-                                                  SizedBox(
-                                                    height: 5.0,
-                                                  ),
-                                                  Text("69 mph",
-                                                      style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontWeight:
-                                                              FontWeight.w400))
-                                                ],
+                            Row(children: <Widget>[
+                              Expanded(
+                                child: Text(
+                                  'Solar Irradiance',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                      color: Colors.white),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                              Expanded(
+                                  child: Align(
+                                      alignment: Alignment.topRight,
+                                      child: ToggleButtons(
+                                          fillColor: Colors.lightBlue,
+                                          selectedColor: Colors.blueAccent,
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          isSelected: isSelected,
+                                          onPressed: (int index) {
+                                            setState(() {
+                                              for (int buttonIndex = 0;
+                                                  buttonIndex <
+                                                      isSelected.length;
+                                                  buttonIndex++) {
+                                                if (buttonIndex == index) {
+                                                  isSelected[buttonIndex] =
+                                                      true;
+                                                } else {
+                                                  isSelected[buttonIndex] =
+                                                      false;
+                                                }
+                                              }
+                                            });
+                                          },
+                                          children: const <Widget>[
+                                            Padding(
+                                              padding: EdgeInsets.all(15.0),
+                                              child: Text(
+                                                "Daily",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15,
+                                                  color: Colors.white,
+                                                ),
                                               ),
                                             ),
-                                          )),
-                                    ),
-                                    Container(
-                                      decoration: const BoxDecoration(
-                                        gradient: LinearGradient(
-                                          begin: Alignment.topCenter,
-                                          end: Alignment.bottomCenter,
-                                          stops: [0.1, 0.4, 0.7, 0.9],
-                                          colors: [
-                                            Color(0xFF3594DD),
-                                            Color(0xFF4563DB),
-                                            Color(0xFF5036D5),
-                                            Color(0xFF5B16D0),
-                                          ],
-                                        ),
-                                      ),
-                                      width: 160.0,
-                                      height: 160.0,
-                                      child: Card(
-                                          elevation: 2.0,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0)),
-                                          child: Center(
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Column(
-                                                children: [
-                                                  Image.asset(
-                                                    "assets/images/temperature.png",
-                                                    width: 64.0,
-                                                  ),
-                                                  SizedBox(
-                                                    height: 10.0,
-                                                  ),
-                                                  Text("Temperature",
-                                                      style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 20.0)),
-                                                  SizedBox(
-                                                    height: 5.0,
-                                                  ),
-                                                  Text("69°C",
-                                                      style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontWeight:
-                                                              FontWeight.w400))
-                                                ],
+                                            Padding(
+                                              padding: EdgeInsets.all(15.0),
+                                              child: Text(
+                                                "Yearly",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15,
+                                                  color: Colors.white,
+                                                ),
                                               ),
-                                            ),
-                                          )),
-                                    ),
-                                    Container(
-                                      decoration: const BoxDecoration(
-                                        gradient: LinearGradient(
-                                          begin: Alignment.topCenter,
-                                          end: Alignment.bottomCenter,
-                                          stops: [0.1, 0.4, 0.7, 0.9],
-                                          colors: [
-                                            Color(0xFF3594DD),
-                                            Color(0xFF4563DB),
-                                            Color(0xFF5036D5),
-                                            Color(0xFF5B16D0),
-                                          ],
-                                        ),
-                                      ),
-                                      width: 160.0,
-                                      height: 160.0,
-                                      child: Card(
-                                          elevation: 2.0,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0)),
-                                          child: Center(
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Column(
-                                                children: [
-                                                  Image.asset(
-                                                    "assets/images/water.png",
-                                                    width: 64.0,
-                                                  ),
-                                                  SizedBox(
-                                                    height: 10.0,
-                                                  ),
-                                                  Text("Humidity",
-                                                      style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 20.0)),
-                                                  SizedBox(
-                                                    height: 5.0,
-                                                  ),
-                                                  Text("69 g/kg",
-                                                      style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontWeight:
-                                                              FontWeight.w400))
-                                                ],
-                                              ),
-                                            ),
-                                          )),
-                                    ),
-                                    Container(
-                                      decoration: const BoxDecoration(
-                                        gradient: LinearGradient(
-                                          begin: Alignment.topCenter,
-                                          end: Alignment.bottomCenter,
-                                          stops: [0.1, 0.4, 0.7, 0.9],
-                                          colors: [
-                                            Color(0xFF3594DD),
-                                            Color(0xFF4563DB),
-                                            Color(0xFF5036D5),
-                                            Color(0xFF5B16D0),
-                                          ],
-                                        ),
-                                      ),
-                                      width: 160.0,
-                                      height: 160.0,
-                                      child: Card(
-                                          elevation: 2.0,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0)),
-                                          child: Center(
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Column(
-                                                children: [
-                                                  Image.asset(
-                                                    "assets/images/uv.png",
-                                                    width: 64.0,
-                                                  ),
-                                                  SizedBox(
-                                                    height: 10.0,
-                                                  ),
-                                                  Text("UV Index",
-                                                      style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 20.0)),
-                                                  SizedBox(
-                                                    height: 5.0,
-                                                  ),
-                                                  Text("69 mW/cm2",
-                                                      style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontWeight:
-                                                              FontWeight.w400))
-                                                ],
-                                              ),
-                                            ),
-                                          )),
-                                    )
-                                  ],
+                                            )
+                                          ]))),
+                            ]),
+                            SizedBox(height: 15),
+                            AspectRatio(
+                              aspectRatio: 1.20,
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  gradient: LinearGradient(
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                      colors: [
+                                        Color.fromRGBO(57, 19, 178, 100),
+                                        Color.fromRGBO(52, 28, 255, 100)
+                                      ]),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(18),
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 10.0,
+                                      left: 10.0,
+                                      top: 20,
+                                      bottom: 12),
+                                  child: LineChart(
+                                    showAvg ? avgData() : mainData(),
+                                  ),
                                 ),
                               ),
                             ),
-                          ],
-                        ),
-                        SizedBox(height: 15),
-                        Container(
-                            width: 350,
-                            height: 350,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
+                            SizedBox(
+                              width: 60,
+                              height: 34,
+                              child: TextButton(
+                                onPressed: () {
+                                  setState(() {
+                                    showAvg = !showAvg;
+                                  });
+                                },
+                                child: Text(
+                                  'avg',
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      color: showAvg
+                                          ? Colors.white.withOpacity(0.5)
+                                          : Colors.white),
+                                ),
+                              ),
                             ),
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18)),
-                              color: Color.fromRGBO(43, 28, 154, 100),
-                              child: Stack(
-                                children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.all(16),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.stretch,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: <Widget>[
-                                        Text(
-                                          'Estimated Savings',
-                                          style: TextStyle(
-                                              color: Colors.yellow,
-                                              fontSize: 24,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        const SizedBox(
-                                          height: 4,
-                                        ),
-                                        Expanded(
+                            SizedBox(height: 15),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Expanded(
+                                  child: Center(
+                                    child: Wrap(
+                                      spacing: 20.0,
+                                      runSpacing: 20.0,
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            gradient: LinearGradient(
+                                              begin: Alignment.topCenter,
+                                              end: Alignment.bottomCenter,
+                                              stops: const [0.1, 0.4, 0.7, 0.9],
+                                              colors: const [
+                                                Color(0xFF3594DD),
+                                                Color(0xFF4563DB),
+                                                Color(0xFF5036D5),
+                                                Color(0xFF5B16D0),
+                                              ],
+                                            ),
+                                          ),
+                                          width: 160.0,
+                                          height: 160.0,
                                           child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 8.0),
-                                            child: BarChart(
-                                              mainBarData(),
-                                              swapAnimationDuration:
-                                                  animDuration,
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Column(
+                                              children: [
+                                                Image.asset(
+                                                  "assets/images/wind.png",
+                                                  width: 64.0,
+                                                ),
+                                                SizedBox(
+                                                  height: 10.0,
+                                                ),
+                                                Text("Wind Speed",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 20.0)),
+                                                SizedBox(
+                                                  height: 5.0,
+                                                ),
+                                                Text("69 mph",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.w400))
+                                              ],
                                             ),
                                           ),
                                         ),
-                                        const SizedBox(
-                                          height: 12,
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            gradient: LinearGradient(
+                                              begin: Alignment.topCenter,
+                                              end: Alignment.bottomCenter,
+                                              stops: const [0.1, 0.4, 0.7, 0.9],
+                                              colors: const [
+                                                Color(0xFF3594DD),
+                                                Color(0xFF4563DB),
+                                                Color(0xFF5036D5),
+                                                Color(0xFF5B16D0),
+                                              ],
+                                            ),
+                                          ),
+                                          width: 160.0,
+                                          height: 160.0,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Column(
+                                              children: [
+                                                Image.asset(
+                                                  "assets/images/temperature.png",
+                                                  width: 64.0,
+                                                ),
+                                                SizedBox(
+                                                  height: 10.0,
+                                                ),
+                                                Text("Temperature",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 20.0)),
+                                                SizedBox(
+                                                  height: 5.0,
+                                                ),
+                                                Text("69°C",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.w400))
+                                              ],
+                                            ),
+                                          ),
                                         ),
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            gradient: LinearGradient(
+                                              begin: Alignment.topCenter,
+                                              end: Alignment.bottomCenter,
+                                              stops: const [0.1, 0.4, 0.7, 0.9],
+                                              colors: const [
+                                                Color(0xFF3594DD),
+                                                Color(0xFF4563DB),
+                                                Color(0xFF5036D5),
+                                                Color(0xFF5B16D0),
+                                              ],
+                                            ),
+                                          ),
+                                          width: 160.0,
+                                          height: 160.0,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Column(
+                                              children: [
+                                                Image.asset(
+                                                  "assets/images/water.png",
+                                                  width: 64.0,
+                                                ),
+                                                SizedBox(
+                                                  height: 10.0,
+                                                ),
+                                                Text("Humidity",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 20.0)),
+                                                SizedBox(
+                                                  height: 5.0,
+                                                ),
+                                                Text("69 g/kg",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.w400))
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            gradient: LinearGradient(
+                                              begin: Alignment.topCenter,
+                                              end: Alignment.bottomCenter,
+                                              stops: const [0.1, 0.4, 0.7, 0.9],
+                                              colors: const [
+                                                Color(0xFF3594DD),
+                                                Color(0xFF4563DB),
+                                                Color(0xFF5036D5),
+                                                Color(0xFF5B16D0),
+                                              ],
+                                            ),
+                                          ),
+                                          width: 160.0,
+                                          height: 160.0,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Column(
+                                              children: [
+                                                Image.asset(
+                                                  "assets/images/uv.png",
+                                                  width: 64.0,
+                                                ),
+                                                SizedBox(
+                                                  height: 10.0,
+                                                ),
+                                                Text("UV Index",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 20.0)),
+                                                SizedBox(
+                                                  height: 5.0,
+                                                ),
+                                                Text("69 mW/cm2",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.w400))
+                                              ],
+                                            ),
+                                          ),
+                                        )
                                       ],
                                     ),
                                   ),
-                                ],
-                              ),
-                            )),
-                        SizedBox(
-                          height: 30,
-                        ),
-                      ],
-                    ))),
-          ],
-        ),
-      ),
-    );
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 15),
+                            Container(
+                                width: 350,
+                                height: 350,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                child: Card(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(18)),
+                                  color: Color.fromRGBO(43, 28, 154, 100),
+                                  child: Stack(
+                                    children: <Widget>[
+                                      Padding(
+                                        padding: const EdgeInsets.all(16),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.stretch,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: <Widget>[
+                                            Text(
+                                              'Estimated Savings',
+                                              style: TextStyle(
+                                                  color: Colors.yellow,
+                                                  fontSize: 24,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            const SizedBox(
+                                              height: 4,
+                                            ),
+                                            Expanded(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 8.0),
+                                                child: BarChart(
+                                                  mainBarData(),
+                                                  swapAnimationDuration:
+                                                      animDuration,
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 12,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )),
+                            SizedBox(
+                              height: 30,
+                            ),
+                          ],
+                        ))),
+              ],
+            ),
+          ),
+        ));
   }
 
   BarChartGroupData makeGroupData(
