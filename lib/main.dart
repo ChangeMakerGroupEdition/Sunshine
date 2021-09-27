@@ -31,12 +31,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late Future<YearRangeDataset> data;
+  late Future<YearRangeDataset> yearData;
+  late Future<HourlyDataset> hourData;
 
   @override
   void initState() {
     super.initState();
-    data = fetchFiveYearDataset();
+    yearData = fetchFiveYearDataset();
+    hourData = fetchHourlyDataset();
   }
 
   int _counter = 0;
@@ -63,8 +65,24 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
+            FutureBuilder<HourlyDataset>(
+              future: hourData,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Column(
+                    children: [
+                      Text("Downward Irradiance value of 24 hours" + snapshot.data!.dwn.toString()),
+                      Text("Cloud Amount of 24 hours" + snapshot.data!.cloudAmount.toString()),
+                    ],
+                  );
+                } else if (snapshot.hasError) {
+                  return Text("${snapshot.error}");
+                }
+                return const CircularProgressIndicator();
+              } 
+            ),
             FutureBuilder<YearRangeDataset>(
-              future: data,
+              future: yearData,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return Column(
@@ -82,7 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
               } 
             ),
             FutureBuilder<YearRangeDataset>(
-              future: data,
+              future: yearData,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return Column(
