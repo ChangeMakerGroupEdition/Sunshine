@@ -28,10 +28,10 @@ List<String> yearRange = ["2016", "2017", "2018", "2019", "2020"];
 Future<YearRangeDataset> fetchFiveYearDataset() async{
   String cord = "latitude=3.1866&longitude=113.0403";
   String timePeriod = "&start=2016&end=2020";
-  String parameters = "parameters=ALLSKY_SFC_LW_DWN,CLOUD_AMT,T2M,WS2M";
+  String parameters = "parameters=ALLSKY_SFC_LW_DWN,CLOUD_AMT,T2M,WS2M,QV2M";
   final res = await http.get(Uri.parse('https://power.larc.nasa.gov/api/temporal/monthly/point?' + parameters + '&community=SB&' + cord + timePeriod + '&format=JSON'));
   if(res.statusCode==200){
-    // print(jsonDecode(res.body));
+    print(res.body);
     return YearRangeDataset.fromJson(jsonDecode(res.body));
   } else {
     throw Exception('Failed to load data.');
@@ -43,9 +43,7 @@ Future<HourlyDataset> fetchHourlyDataset() async{
   String timePeriod = "&start=2020&end=2020";
   String parameters = "parameters=ALLSKY_SFC_SW_DWN_HR,CLOUD_AMT_HR";
   final res = await http.get(Uri.parse('https://power.larc.nasa.gov/api/temporal/monthly/point?' + parameters + '&community=SB&' + cord + timePeriod + '&format=JSON'));
-  print(res.body);
   if(res.statusCode==200){
-    print(jsonDecode(res.body));
     return HourlyDataset.fromJson(jsonDecode(res.body));
   } else {
     throw Exception('Failed to load data.');
@@ -74,6 +72,22 @@ class DataModel {
     });
     return DataModel(dates: dates, values: values);
   }
+
+  List<double> getFiveYearGraph() {
+    List<double> fiveYearMeans = [];
+    for (var i = 0; i < values.length; i = i + 13) {
+      fiveYearMeans.add(values[i]);
+    }
+    return fiveYearMeans;
+  } 
+
+  List<double> getLastYearGraph() {
+    List<double> lastYear = [];
+    for (var i = 1; i <= 12; i++) {
+      lastYear.add(values[values.length-i-1]);
+    }
+    return lastYear;
+  }
 }
 
 class YearRangeDataset {
@@ -81,12 +95,14 @@ class YearRangeDataset {
   final DataModel cloudAmount;
   final DataModel temperature;
   final DataModel windSpeed;
+  final DataModel humidity;
 
   YearRangeDataset({
     required this.dwn,
     required this.cloudAmount,
     required this.temperature,
     required this.windSpeed,
+    required this.humidity,
   });
 
   factory YearRangeDataset.fromJson(Map<String, dynamic> json) {
@@ -95,79 +111,8 @@ class YearRangeDataset {
       cloudAmount: DataModel.fromJson(json['properties']['parameter']['CLOUD_AMT']),
       temperature: DataModel.fromJson(json['properties']['parameter']['T2M']),
       windSpeed: DataModel.fromJson(json['properties']['parameter']['WS2M']),
+      humidity: DataModel.fromJson(json['properties']['parameter']["QV2M"])
     );
-  }
-
-  List<double> getFiveYearGraph(String type) {
-    switch(type) {
-      case "cloud": {
-        List<double> fiveYearMeans = [];
-        for (var i = 0; i < cloudAmount.values.length; i = i + 13) {
-          fiveYearMeans.add(cloudAmount.values[i]);
-        }
-        return fiveYearMeans;
-      } 
-      case "solar": {
-        List<double> fiveYearMeans = [];
-        for (var i = 0; i < dwn.values.length; i = i + 13) {
-          fiveYearMeans.add(dwn.values[i]);
-        }
-        return fiveYearMeans;
-      } 
-      case "temp": {
-        List<double> fiveYearMeans = [];
-        for (var i = 0; i < temperature.values.length; i = i + 13) {
-          fiveYearMeans.add(temperature.values[i]);
-        }
-        return fiveYearMeans;
-      } 
-      case "wind": {
-        List<double> fiveYearMeans = [];
-        for (var i = 0; i < windSpeed.values.length; i = i + 13) {
-          fiveYearMeans.add(windSpeed.values[i]);
-        }
-        return fiveYearMeans;
-      } 
-      default: {
-        return [];
-      }
-    } 
-  }
-  
-  List<double> getLastYearGraph(String type) {
-    switch(type) {
-      case "cloud": {
-        List<double> lastYear = [];
-        for (var i = 1; i <= 12; i++) {
-          lastYear.add(cloudAmount.values[cloudAmount.values.length-i-1]);
-        }
-        return lastYear;
-      }
-      case "solar": {
-        List<double> lastYear = [];
-        for (var i = 1; i <= 12; i++) {
-          lastYear.add(dwn.values[dwn.values.length-i-1]);
-        }
-        return lastYear;
-      }
-      case "temp": {
-        List<double> lastYear = [];
-        for (var i = 1; i <= 12; i++) {
-          lastYear.add(temperature.values[temperature.values.length-i-1]);
-        }
-        return lastYear;
-      }
-      case "wind": {
-        List<double> lastYear = [];
-        for (var i = 1; i <= 12; i++) {
-          lastYear.add(windSpeed.values[windSpeed.values.length-i-1]);
-        }
-        return lastYear;
-      }
-      default: {
-        return [];
-      }
-    } 
   }
 }
 

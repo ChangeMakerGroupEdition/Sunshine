@@ -87,10 +87,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 if (snapshot.hasData) {
                   return Column(
                     children: [
-                      Text("Downward Irradiance value of Last Five Years" + snapshot.data!.dwn.values.toString()),
-                      Text("Cloud Amount of Last Five Years" + snapshot.data!.cloudAmount.values.toString()),
-                      Text("Temperature of Last Five Years" + snapshot.data!.temperature.values.toString()),
-                      Text("Wind Speed of Last Five Years" + snapshot.data!.windSpeed.values.toString()),
+                      Text("Downward Irradiance value of Last Five Years" + snapshot.data!.dwn.getFiveYearGraph().toString()),
+                      Text("Cloud Amount of Last Five Years" + snapshot.data!.cloudAmount.getFiveYearGraph().toString()),
+                      Text("Temperature of Last Five Years" + snapshot.data!.temperature.getFiveYearGraph().toString()),
+                      Text("Wind Speed of Last Five Years" + snapshot.data!.windSpeed.getFiveYearGraph().toString()),
+                      Text("Humidity of Last Five Years" + snapshot.data!.humidity.getFiveYearGraph().toString()),
                     ],
                   );
                 } else if (snapshot.hasError) {
@@ -105,10 +106,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 if (snapshot.hasData) {
                   return Column(
                     children: [
-                      Text("Downward Irradiance Last Five Years" + snapshot.data!.getLastYearGraph("solar").toString()),
-                      Text("Cloud Amount of Last Five Years" + snapshot.data!.getLastYearGraph("cloud").toString()),
-                      Text("Temperature Last Five Years" + snapshot.data!.getLastYearGraph("temp").toString()),
-                      Text("Wind Speed Last Five Years" + snapshot.data!.getLastYearGraph("wind").toString()),
+                      Text("Downward Irradiance Last Years" + snapshot.data!.dwn.getLastYearGraph().toString()),
+                      Text("Cloud Amount of Last Years" + snapshot.data!.cloudAmount.getLastYearGraph().toString()),
+                      Text("Temperature Last Years" + snapshot.data!.temperature.getLastYearGraph().toString()),
+                      Text("Wind Speed Last Years" + snapshot.data!.windSpeed.getLastYearGraph().toString()),
+                      Text("Humidity of Last Years" + snapshot.data!.humidity.getLastYearGraph().toString()),
                     ],
                   );
                 } else if (snapshot.hasError) {
