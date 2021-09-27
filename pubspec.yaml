@@ -37,6 +37,11 @@ dependencies:
   google_fonts: ^2.1.0 
   fl_chart: ^0.40.0 
   introduction_screen: ^2.1.0
+  location:
+  google_maps_flutter: 
+  geocoding:
+  intl:
+  geolocator:
 
 
   
