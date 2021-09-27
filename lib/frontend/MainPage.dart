@@ -3,9 +3,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:location/location.dart';
+
 import 'package:myapp/frontend/DetailsScreen.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'onboard_screen.dart';
+import 'package:geocoding/geocoding.dart' hide Location;
+import 'package:intl/intl.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -33,15 +38,143 @@ class home_page extends StatefulWidget {
 }
 
 class _home_page extends State<home_page> {
-  static final _initialCameraPosition =
-      CameraPosition(target: positionNow, zoom: 11.5);
-  late GoogleMapController _googleMapController;
+  late LocationData _currentPosition;
+  late String _address, _dateTime;
+  late GoogleMapController mapController;
+  late Marker marker;
+  late Location location = Location();
 
+  late GoogleMapController _controller;
+  LatLng _initialcameraposition = LatLng(0.5937, 0.9629);
   @override
-  void dispose() {
-    _googleMapController.dispose();
-    super.dispose();
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getLoc();
   }
+
+  void _onMapCreated(GoogleMapController _cntlr) {
+    _controller = _controller;
+    location.onLocationChanged.listen((l) {
+      _controller.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(target: LatLng(l.latitude!, l.longitude!), zoom: 15),
+        ),
+      );
+    });
+  }
+
+  getLoc() async {
+    bool _serviceEnabled;
+    PermissionStatus _permissionGranted;
+
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return;
+      }
+    }
+
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
+
+    _currentPosition = await location.getLocation();
+    _initialcameraposition =
+        LatLng(_currentPosition.latitude!, _currentPosition.longitude!);
+    location.onLocationChanged.listen((LocationData currentLocation) {
+      print("${currentLocation.longitude} : ${currentLocation.longitude}");
+      setState(() {
+        _currentPosition = currentLocation;
+        _initialcameraposition =
+            LatLng(_currentPosition.latitude!, _currentPosition.longitude!);
+
+        DateTime now = DateTime.now();
+        _dateTime = DateFormat('EEE d MMM kk:mm:ss ').format(now);
+        _getAddress(_currentPosition.latitude, _currentPosition.longitude)
+            .then((value) {
+          setState(() {
+            // _address = "${value.first.addressLine}";
+          });
+        });
+      });
+    });
+  }
+
+  // Future<List<Address>> _getAddress(lat, lang) async {
+  //   final coordinates = Coordinates(lat, lang);
+  //   List<Address> add =
+  //       await Geocoder.local.findAddressesFromCoordinates(coordinates);
+  //   return add;
+  // }
+  Future<Position> _getAddress(double? latitude, double? longitude) async {
+      return await Geolocator.getCurrentPosition();
+}
+
+
+  // var locationMessage = "";
+  // late Position _currentPosition;
+  // var _currentAddress ="";
+  // late LatLng _currentCoordi;
+  // _getAddressFromLatLng() async {
+  //   try {
+  //     List<Placemark> placemarks = await placemarkFromCoordinates(
+  //         _currentPosition.latitude, _currentPosition.longitude);
+
+  //     Placemark place = placemarks[0];
+
+  //     setState(() {
+  //       _currentAddress =
+  //           "${place.locality}, ${place.postalCode}, ${place.country}";
+  //       _currentCoordi = LatLng(_currentPosition.latitude, _currentPosition.longitude);
+  //     });
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
+
+  // _getCurrentLocation() {
+  //   Geolocator.getCurrentPosition(
+  //           desiredAccuracy: LocationAccuracy.best,
+  //           forceAndroidLocationManager: true)
+  //       .then((Position position) {
+  //     setState(() {
+  //       _currentPosition = position;
+  //       _getAddressFromLatLng();
+  //     });
+  //   }).catchError((e) {
+  //     print(e);
+  //   });
+  // }
+  // void getCurrentLocation() async {
+  //   var position = await Geolocator.getCurrentPosition(
+  //       desiredAccuracy: LocationAccuracy.high);
+  //   var lastPosition = await Geolocator.getLastKnownPosition();
+  //   print(lastPosition);
+  //   var lat = position.latitude;
+  //   var long = position.longitude;
+  //   print("$lat, $long");
+
+  //   setState(() {
+  //     locationMessage = "Latitude: $lat, Longtidue: $long";
+  //     positionNow = LatLng(position.latitude, position.longitude);
+  //   });
+  // }
+
+  // final _initialCameraPosition =
+  //     CameraPosition(target: _currentCoordi, zoom: 11.5);
+  // late GoogleMapController _googleMapController;
+
+  // @override
+  // void dispose() {
+  //   _googleMapController.dispose();
+  //   super.dispose();
+  // }
 
   // final LatLng _center = const LatLng(28.535517, 77.391029);
 
@@ -70,6 +203,14 @@ class _home_page extends State<home_page> {
   // void _onMapCreated(GoogleMapController controller) {
   //   mapController = controller;
   // }
+  // LocationData _currentPosition;
+  // String _address,_dateTime;
+  // GoogleMapController mapController;
+  // Marker marker;
+  // Location location = Location();
+
+  // GoogleMapController _controller;
+  // LatLng _initialcameraposition = LatLng(0.5937, 0.9629);
 
   bool showAvg = false;
   late List<bool> isSelected;
@@ -80,11 +221,6 @@ class _home_page extends State<home_page> {
   final Duration animDuration = const Duration(milliseconds: 250);
   final Color barBackgroundColor = const Color(0xff72d8bf);
   int touchedIndex = -1;
-  @override
-  void initState() {
-    isSelected = [true, false];
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -139,6 +275,38 @@ class _home_page extends State<home_page> {
                       image: DecorationImage(
                           image: AssetImage("assets/images/intropic.png"))),
                 ),
+                // ElevatedButton.icon(
+                //     icon: const Icon(Icons.location_on,
+                //         // size: 80
+                //         color: Colors.white),
+                //     onPressed: () {
+                //       _getCurrentLocation();
+                //     },
+                //     style: ElevatedButton.styleFrom(
+                //       fixedSize: const Size(180, 50),
+                //       shape: RoundedRectangleBorder(
+                //           borderRadius: BorderRadius.circular(50)),
+                //       primary: Colors.blue[800],
+                //     ),
+                //     label: const Text("Get Location",
+                //         style: TextStyle(fontSize: 20.0, color: Colors.white))),
+                const SizedBox(height: 20),
+                // Text(_currentAddress,
+                //     style: const TextStyle(
+                //         fontSize: 19.0,
+                //         fontWeight: FontWeight.w500,
+                //         color: Colors.white)),
+                // SizedBox(
+                //   height: 3,
+                // ),
+                // if (_address != null)
+                //   Text(
+                //     "Address: $_address",
+                //     style: TextStyle(
+                //       fontSize: 16,
+                //       color: Colors.white,
+                //     ),
+                //   ),
                 // Text("Bintulu, Sarawak",
                 //     style: TextStyle(
                 //         fontSize: 19,
@@ -177,7 +345,7 @@ class _home_page extends State<home_page> {
                         padding: const EdgeInsets.all(20),
                         child: Column(
                           children: <Widget>[
-                            Row(children: <Widget>[
+                            Row(children: const <Widget>[
                               Expanded(
                                 child: Text(
                                   'Solar Irradiance',
@@ -188,55 +356,55 @@ class _home_page extends State<home_page> {
                                   textAlign: TextAlign.left,
                                 ),
                               ),
-                              Expanded(
-                                  child: Align(
-                                      alignment: Alignment.topRight,
-                                      child: ToggleButtons(
-                                          fillColor: Colors.lightBlue,
-                                          selectedColor: Colors.blueAccent,
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          isSelected: isSelected,
-                                          onPressed: (int index) {
-                                            setState(() {
-                                              for (int buttonIndex = 0;
-                                                  buttonIndex <
-                                                      isSelected.length;
-                                                  buttonIndex++) {
-                                                if (buttonIndex == index) {
-                                                  isSelected[buttonIndex] =
-                                                      true;
-                                                } else {
-                                                  isSelected[buttonIndex] =
-                                                      false;
-                                                }
-                                              }
-                                            });
-                                          },
-                                          children: const <Widget>[
-                                            Padding(
-                                              padding: EdgeInsets.all(15.0),
-                                              child: Text(
-                                                "Daily",
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 15,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsets.all(15.0),
-                                              child: Text(
-                                                "Yearly",
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 15,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                            )
-                                          ]))),
+                              // Expanded(
+                              //     child: Align(
+                              //         alignment: Alignment.topRight,
+                              //         child: ToggleButtons(
+                              //             fillColor: Colors.lightBlue,
+                              //             selectedColor: Colors.blueAccent,
+                              //             borderRadius:
+                              //                 BorderRadius.circular(20),
+                              //             isSelected: isSelected,
+                              //             onPressed: (int index) {
+                              //               setState(() {
+                              //                 for (int buttonIndex = 0;
+                              //                     buttonIndex <
+                              //                         isSelected.length;
+                              //                     buttonIndex++) {
+                              //                   if (buttonIndex == index) {
+                              //                     isSelected[buttonIndex] =
+                              //                         true;
+                              //                   } else {
+                              //                     isSelected[buttonIndex] =
+                              //                         false;
+                              //                   }
+                              //                 }
+                              //               });
+                              //             },
+                              //             children: const <Widget>[
+                              //               Padding(
+                              //                 padding: EdgeInsets.all(15.0),
+                              //                 child: Text(
+                              //                   "Daily",
+                              //                   style: TextStyle(
+                              //                     fontWeight: FontWeight.bold,
+                              //                     fontSize: 15,
+                              //                     color: Colors.white,
+                              //                   ),
+                              //                 ),
+                              //               ),
+                              //               Padding(
+                              //                 padding: EdgeInsets.all(15.0),
+                              //                 child: Text(
+                              //                   "Yearly",
+                              //                   style: TextStyle(
+                              //                     fontWeight: FontWeight.bold,
+                              //                     fontSize: 15,
+                              //                     color: Colors.white,
+                              //                   ),
+                              //                 ),
+                              //               )
+                              //             ]))),
                             ]),
                             SizedBox(height: 15),
                             AspectRatio(
@@ -554,16 +722,21 @@ class _home_page extends State<home_page> {
                                 width: MediaQuery.of(context).size.width * 0.8,
                                 child: Stack(children: [
                                   GoogleMap(
+                                    onMapCreated: _onMapCreated,
                                     myLocationButtonEnabled: true,
                                     mapType: MapType.normal,
-                                    initialCameraPosition:
-                                        _initialCameraPosition,
+                                    initialCameraPosition: CameraPosition(
+                                      target: _initialcameraposition,
+                                      zoom: 10,
+                                    ),
                                   ),
-                                  FloatingActionButton(
-                                      onPressed: () =>
-                                          _googleMapController.animateCamera(
-                                              CameraUpdate.newCameraPosition(
-                                                  _initialCameraPosition)))
+                                  // FloatingActionButton(
+                                  //     onPressed: () =>
+                                  //         _googleMapController.animateCamera(
+                                  //             CameraUpdate.newCameraPosition(
+                                  //                 _initialCameraPosition)),
+                                  //     child: const Icon(
+                                  //         Icons.center_focus_strong)),
                                 ])),
                           ],
                         ))),
@@ -939,6 +1112,7 @@ class _home_page extends State<home_page> {
     );
   }
 }
+
                             // child: ExpansionTile(
                             //   title: Text(
                             //     'Time',
@@ -951,4 +1125,4 @@ class _home_page extends State<home_page> {
                             //     ListTile(title: Text('Year')),
                             //     ListTile(title: Text('Daily'))
                             //   ],
-                            // ),
+

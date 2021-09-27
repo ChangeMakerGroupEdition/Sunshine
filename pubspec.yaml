@@ -40,7 +40,13 @@ dependencies:
   location:
   google_maps_flutter: 
   geocoding:
+  # geocoder: 
+  #   git: 
+  #     url: https://github.com/nguyenxdat/flutter_geocoder.git 
+  #     ref: master
   geolocator:
+  intl:
+    
   
 
 
