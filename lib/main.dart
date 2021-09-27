@@ -36,7 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    data = fetchFiveYearData();
+    data = fetchFiveYearDataset();
   }
 
   int _counter = 0;
@@ -69,9 +69,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 if (snapshot.hasData) {
                   return Column(
                     children: [
-                      Text("DNI value of Last Five Years" + snapshot.data!.yearCloudAmount.values.toString()),
-                      Text("DIFF value of Last Five Years" + snapshot.data!.yearDNI.values.toString()),
-                      Text("Cloud Amount of Last Five Years" + snapshot.data!.yearDIFF.values.toString()),
+                      Text("Downward Irradiance value of Last Five Years" + snapshot.data!.dwn.values.toString()),
+                      Text("Cloud Amount of Last Five Years" + snapshot.data!.cloudAmount.values.toString()),
+                      Text("Temperature of Last Five Years" + snapshot.data!.temperature.values.toString()),
+                      Text("Wind Speed of Last Five Years" + snapshot.data!.windSpeed.values.toString()),
                     ],
                   );
                 } else if (snapshot.hasError) {
@@ -86,8 +87,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 if (snapshot.hasData) {
                   return Column(
                     children: [
-                      Text("Solar irradiation of Last Five Years" + snapshot.data!.getLastYearGraph("solar").toString()),
+                      Text("Downward Irradiance Last Five Years" + snapshot.data!.getLastYearGraph("solar").toString()),
                       Text("Cloud Amount of Last Five Years" + snapshot.data!.getLastYearGraph("cloud").toString()),
+                      Text("Temperature Last Five Years" + snapshot.data!.getLastYearGraph("temp").toString()),
+                      Text("Wind Speed Last Five Years" + snapshot.data!.getLastYearGraph("wind").toString()),
                     ],
                   );
                 } else if (snapshot.hasError) {
