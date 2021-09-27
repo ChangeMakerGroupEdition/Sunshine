@@ -13,10 +13,8 @@ Backend
 - <s>Get http response from the website</s>
 - <s>Create custom data model</s>
 - <s>Parse it into the data model</s> 
-- Get http response every hour
+- <s>Year Data</s> 
+- <s>Hourly Data</s> 
 
-- Calculations for graph plotting
-
-- Firestore storage 
-    - type of solar panels
-    - past data for current location
+- type of solar panels
+- energy / saving estimation 
