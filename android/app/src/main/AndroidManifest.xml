@@ -2,6 +2,7 @@
     package="com.example.myapp">
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="myapp"
         android:icon="@mipmap/ic_launcher">
@@ -30,5 +31,9 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCkYcpavuLlV6L6Qj9Rc9xQE0Cw75RIwX0" />
+            
     </application>
 </manifest>

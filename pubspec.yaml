@@ -40,8 +40,8 @@ dependencies:
   location:
   google_maps_flutter: 
   geocoding:
-  intl:
   geolocator:
+  
 
 
   

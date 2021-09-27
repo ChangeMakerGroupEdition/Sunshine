@@ -1,7 +1,10 @@
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:myapp/frontend/MainPage.dart';
 
@@ -15,6 +18,8 @@ class OnBoardingPage extends StatefulWidget {
 class _OnBoardingPageState extends State<OnBoardingPage> {
   final introKey = GlobalKey<IntroductionScreenState>();
   var locationMessage = "";
+  late final LatLng positionNow;
+  
   void getCurrentLocation() async {
     var position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
@@ -26,6 +31,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
 
     setState(() {
       locationMessage = "Latitude: $lat, Longtidue: $long";
+      positionNow = LatLng(position.latitude, position.longitude);
     });
   }
 

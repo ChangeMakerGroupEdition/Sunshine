@@ -1,12 +1,11 @@
 // ignore_for_file: camel_case_types, file_names, prefer_const_constructors
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:myapp/frontend/DetailsScreen.dart';
-
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'onboard_screen.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -19,8 +18,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Shine',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(),
-      home: const home_page(),
+      home: home_page(),
     );
   }
 }
@@ -33,6 +33,44 @@ class home_page extends StatefulWidget {
 }
 
 class _home_page extends State<home_page> {
+  static final _initialCameraPosition =
+      CameraPosition(target: positionNow, zoom: 11.5);
+  late GoogleMapController _googleMapController;
+
+  @override
+  void dispose() {
+    _googleMapController.dispose();
+    super.dispose();
+  }
+
+  // final LatLng _center = const LatLng(28.535517, 77.391029);
+
+  // List<MapMarker> mapMarkers = [];
+  // List<Marker> customMarkers = [];
+
+  // List<Marker> mapBitmapsToMarkers(List<Uint8List> bitmaps) {
+  //   bitmaps.asMap().forEach((mid, bmp) {
+  //     customMarkers.add(Marker(
+  //       markerId: MarkerId("$mid"),
+  //       position: locations[mid].coordinates,
+  //       icon: BitmapDescriptor.fromBytes(bmp),
+  //     ));
+  //   });
+  // }
+
+  // @override
+  // void initState() {
+  //   MarkerGenerator(markerWidgets(), (bitmaps) {
+  //     setState(() {
+  //       mapBitmapsToMarkers(bitmaps);
+  //     });
+  //   }).generate(context);
+  // }
+
+  // void _onMapCreated(GoogleMapController controller) {
+  //   mapController = controller;
+  // }
+
   bool showAvg = false;
   late List<bool> isSelected;
   List<Color> gradientColors = [
@@ -508,6 +546,25 @@ class _home_page extends State<home_page> {
                             SizedBox(
                               height: 30,
                             ),
+                            Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                height: 500,
+                                width: MediaQuery.of(context).size.width * 0.8,
+                                child: Stack(children: [
+                                  GoogleMap(
+                                    myLocationButtonEnabled: true,
+                                    mapType: MapType.normal,
+                                    initialCameraPosition:
+                                        _initialCameraPosition,
+                                  ),
+                                  FloatingActionButton(
+                                      onPressed: () =>
+                                          _googleMapController.animateCamera(
+                                              CameraUpdate.newCameraPosition(
+                                                  _initialCameraPosition)))
+                                ])),
                           ],
                         ))),
               ],
