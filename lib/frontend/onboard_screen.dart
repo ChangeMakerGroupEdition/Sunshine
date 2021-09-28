@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:introduction_screen/introduction_screen.dart';
-import 'package:myapp/frontend/MainPage.dart';
+import 'package:myapp/frontend/home_page.dart';
 
 class PositionLocation {
   late final LatLng positionNow;
@@ -22,7 +22,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
 
   void _onIntroEnd(context) {
     Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => const home_page()),
+      MaterialPageRoute(builder: (_) => const HomePage()),
     );
   }
 
@@ -170,12 +170,6 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           borderRadius: BorderRadius.all(Radius.circular(25.0)),
         ),
       ),
-      // dotsContainerDecorator: const ShapeDecoration(
-      //   color: Colors.black87,
-      //   shape: RoundedRectangleBorder(
-      //     borderRadius: BorderRadius.all(Radius.circular(15.0)),
-      //   ),
-      // ),
     );
   }
 }

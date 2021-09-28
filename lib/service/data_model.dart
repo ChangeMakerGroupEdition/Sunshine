@@ -4,33 +4,12 @@ import 'package:http/http.dart' as http;
 
 List<String> yearRange = ["2016", "2017", "2018", "2019", "2020"];
 
-// class DataModel {
-//   final double dailyDNR;
-//   final double dailyDIFF;
-//   final String title;
-
-//   DataModel({
-//     required this.dailyDNR,
-//     required this.dailyDIFF,
-//     required this.title,
-//   });
-
-//   factory DataModel.fromJson(Map<String, dynamic> json, String date) {
-//     return DataModel(
-//       title: json['header']['title'],
-//       dailyDNR: json['properties']['parameter']['ALLSKY_SFC_SW_DNI'][date],
-//       dailyDIFF: json['properties']['parameter']['ALLSKY_SFC_SW_DIFF'][date]
-//     );
-//   }
-// }
-
 Future<YearRangeDataset> fetchFiveYearDataset() async{
   String cord = "latitude=3.1866&longitude=113.0403";
   String timePeriod = "&start=2016&end=2020";
   String parameters = "parameters=ALLSKY_SFC_LW_DWN,CLOUD_AMT,T2M,WS2M,QV2M";
   final res = await http.get(Uri.parse('https://power.larc.nasa.gov/api/temporal/monthly/point?' + parameters + '&community=SB&' + cord + timePeriod + '&format=JSON'));
   if(res.statusCode==200){
-    print(res.body);
     return YearRangeDataset.fromJson(jsonDecode(res.body));
   } else {
     throw Exception('Failed to load data.');
