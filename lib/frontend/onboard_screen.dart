@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:myapp/frontend/MainPage.dart';
@@ -19,23 +18,7 @@ class OnBoardingPage extends StatefulWidget {
 
 class _OnBoardingPageState extends State<OnBoardingPage> {
   final introKey = GlobalKey<IntroductionScreenState>();
-  var locationMessage = "";
-  late final LatLng positionNow;
 
-  void getCurrentLocation() async {
-    var position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-    var lastPosition = await Geolocator.getLastKnownPosition();
-    print(lastPosition);
-    var lat = position.latitude;
-    var long = position.longitude;
-    print("$lat, $long");
-
-    setState(() {
-      locationMessage = "Latitude: $lat, Longtidue: $long";
-      positionNow = LatLng(position.latitude, position.longitude);
-    });
-  }
 
   void _onIntroEnd(context) {
     Navigator.of(context).push(
@@ -117,70 +100,6 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
         ));
   }
 
-  Widget _buildThirdPage() {
-    return Container(
-        height: double.infinity,
-        width: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            stops: [0.1, 0.4, 0.7, 0.9],
-            colors: [
-              Color(0xFF3594DD),
-              Color(0xFF4563DB),
-              Color(0xFF5036D5),
-              Color(0xFF5B16D0),
-            ],
-          ),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
-              child: Image.asset(
-                'assets/images/location.png',
-                alignment: Alignment.center,
-              ),
-            ),
-            const Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
-                child: Text("We need Your Location",
-                    style: TextStyle(
-                        fontSize: 30.0,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white))),
-            const SizedBox(height: 0),
-            ElevatedButton.icon(
-                icon: const Icon(Icons.location_on,
-                    // size: 80
-                    color: Colors.white),
-                onPressed: () {
-                  getCurrentLocation();
-                },
-                style: ElevatedButton.styleFrom(
-                  fixedSize: const Size(180, 50),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50)),
-                  primary: Colors.blue[800],
-                ),
-                label: const Text("Get Location",
-                    style: TextStyle(fontSize: 20.0, color: Colors.white))),
-            const SizedBox(height: 40),
-            Text(locationMessage,
-                style: const TextStyle(
-                    fontSize: 19.0,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white)),
-            const SizedBox(
-              height: 30,
-            ),
-          ],
-        ));
-  }
-
   @override
   Widget build(BuildContext context) {
     const pageDecoration = PageDecoration(
@@ -217,17 +136,6 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           title: "",
           body: "",
           image: _buildSecondPage(),
-          decoration: secondpageDecoration.copyWith(
-            contentMargin: const EdgeInsets.symmetric(horizontal: 16),
-            fullScreen: true,
-            // bodyFlex: 5,
-            // imageFlex: 4,
-          ),
-        ),
-        PageViewModel(
-          title: "",
-          body: "",
-          image: _buildThirdPage(),
           decoration: secondpageDecoration.copyWith(
             contentMargin: const EdgeInsets.symmetric(horizontal: 16),
             fullScreen: true,

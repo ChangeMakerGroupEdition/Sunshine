@@ -1,11 +1,11 @@
 // ignore_for_file: camel_case_types, file_names, prefer_const_constructors
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart';
-
 import 'package:myapp/frontend/DetailsScreen.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geocoding/geocoding.dart' hide Location;
@@ -17,8 +17,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -39,21 +37,34 @@ class home_page extends StatefulWidget {
 
 class _home_page extends State<home_page> {
   late LocationData _currentPosition;
-  late String _address, _dateTime;
-  late GoogleMapController mapController;
   late Marker marker;
   late Location location = Location();
-
+  late GoogleMapController _googleMapController;
   late GoogleMapController _controller;
+
   LatLng _initialcameraposition = LatLng(0.5937, 0.9629);
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getLoc();
   }
 
-  void _onMapCreated(GoogleMapController _cntlr) {
+  late LatLng _initialPosition;
+  final Set<Marker> _markers = {};
+  late LatLng _lastMapPosition = _initialPosition;
+
+  _onCameraMove(CameraPosition position) {
+    _lastMapPosition = position.target;
+  }
+
+  @override
+  void dispose() {
+    _googleMapController.dispose();
+    super.dispose();
+  }
+
+  // late Completer<GoogleMapController> controller1;
+  void _onMapCreated(GoogleMapController controller) {
     _controller = _controller;
     location.onLocationChanged.listen((l) {
       _controller.animateCamera(
@@ -62,8 +73,23 @@ class _home_page extends State<home_page> {
         ),
       );
     });
+    // setState(() {
+    //   controller1.complete(controller);
+    // });
   }
 
+  // void _updatePosition(CameraPosition _position) {
+  //   Position newMarkerPosition = Position(
+  //       latitude: _position.target.latitude,
+  //       longitude: _position.target.longitude);
+  //   Marker marker = MarkerId("1") as Marker;
+
+  //   setState(() {
+  //     marker["1"] = marker.copyWith(
+  //         positionParam:
+  //             LatLng(newMarkerPosition.latitude, newMarkerPosition.longitude));
+  //   });
+  // }
   getLoc() async {
     bool _serviceEnabled;
     PermissionStatus _permissionGranted;
@@ -93,127 +119,28 @@ class _home_page extends State<home_page> {
         _currentPosition = currentLocation;
         _initialcameraposition =
             LatLng(_currentPosition.latitude!, _currentPosition.longitude!);
-
-        DateTime now = DateTime.now();
-        _dateTime = DateFormat('EEE d MMM kk:mm:ss ').format(now);
-        _getAddress(_currentPosition.latitude, _currentPosition.longitude)
+        GetAddressFromLatLong(
+                _currentPosition.latitude, _currentPosition.longitude)
             .then((value) {
-          setState(() {
-            // _address = "${value.first.addressLine}";
-          });
+          setState(() {});
         });
       });
     });
   }
 
-  // Future<List<Address>> _getAddress(lat, lang) async {
-  //   final coordinates = Coordinates(lat, lang);
-  //   List<Address> add =
-  //       await Geocoder.local.findAddressesFromCoordinates(coordinates);
-  //   return add;
-  // }
-  Future<Position> _getAddress(double? latitude, double? longitude) async {
-      return await Geolocator.getCurrentPosition();
-}
+  String Address = '';
 
-
-  // var locationMessage = "";
-  // late Position _currentPosition;
-  // var _currentAddress ="";
-  // late LatLng _currentCoordi;
-  // _getAddressFromLatLng() async {
-  //   try {
-  //     List<Placemark> placemarks = await placemarkFromCoordinates(
-  //         _currentPosition.latitude, _currentPosition.longitude);
-
-  //     Placemark place = placemarks[0];
-
-  //     setState(() {
-  //       _currentAddress =
-  //           "${place.locality}, ${place.postalCode}, ${place.country}";
-  //       _currentCoordi = LatLng(_currentPosition.latitude, _currentPosition.longitude);
-  //     });
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
-
-  // _getCurrentLocation() {
-  //   Geolocator.getCurrentPosition(
-  //           desiredAccuracy: LocationAccuracy.best,
-  //           forceAndroidLocationManager: true)
-  //       .then((Position position) {
-  //     setState(() {
-  //       _currentPosition = position;
-  //       _getAddressFromLatLng();
-  //     });
-  //   }).catchError((e) {
-  //     print(e);
-  //   });
-  // }
-  // void getCurrentLocation() async {
-  //   var position = await Geolocator.getCurrentPosition(
-  //       desiredAccuracy: LocationAccuracy.high);
-  //   var lastPosition = await Geolocator.getLastKnownPosition();
-  //   print(lastPosition);
-  //   var lat = position.latitude;
-  //   var long = position.longitude;
-  //   print("$lat, $long");
-
-  //   setState(() {
-  //     locationMessage = "Latitude: $lat, Longtidue: $long";
-  //     positionNow = LatLng(position.latitude, position.longitude);
-  //   });
-  // }
-
-  // final _initialCameraPosition =
-  //     CameraPosition(target: _currentCoordi, zoom: 11.5);
-  // late GoogleMapController _googleMapController;
-
-  // @override
-  // void dispose() {
-  //   _googleMapController.dispose();
-  //   super.dispose();
-  // }
-
-  // final LatLng _center = const LatLng(28.535517, 77.391029);
-
-  // List<MapMarker> mapMarkers = [];
-  // List<Marker> customMarkers = [];
-
-  // List<Marker> mapBitmapsToMarkers(List<Uint8List> bitmaps) {
-  //   bitmaps.asMap().forEach((mid, bmp) {
-  //     customMarkers.add(Marker(
-  //       markerId: MarkerId("$mid"),
-  //       position: locations[mid].coordinates,
-  //       icon: BitmapDescriptor.fromBytes(bmp),
-  //     ));
-  //   });
-  // }
-
-  // @override
-  // void initState() {
-  //   MarkerGenerator(markerWidgets(), (bitmaps) {
-  //     setState(() {
-  //       mapBitmapsToMarkers(bitmaps);
-  //     });
-  //   }).generate(context);
-  // }
-
-  // void _onMapCreated(GoogleMapController controller) {
-  //   mapController = controller;
-  // }
-  // LocationData _currentPosition;
-  // String _address,_dateTime;
-  // GoogleMapController mapController;
-  // Marker marker;
-  // Location location = Location();
-
-  // GoogleMapController _controller;
-  // LatLng _initialcameraposition = LatLng(0.5937, 0.9629);
+  Future<void> GetAddressFromLatLong(lat, long) async {
+    List<Placemark> placemarks = await placemarkFromCoordinates(lat, long);
+    print(placemarks);
+    Placemark place = placemarks[0];
+    Address =
+        '${place.subLocality} ${place.locality}, ${place.postalCode}, ${place.country}';
+    setState(() {});
+  }
 
   bool showAvg = false;
-  late List<bool> isSelected;
+  late List<bool> isSelected = [true, false];
   List<Color> gradientColors = [
     const Color(0xff23b6e6),
     const Color(0xff02d39a),
@@ -260,14 +187,6 @@ class _home_page extends State<home_page> {
                     ],
                   ),
                 ),
-
-                // SizedBox(height: 25),
-                // Text("Your Dashboard",
-                //     style: TextStyle(
-                //         fontSize: 22,
-                //         color: Colors.white,
-                //         fontWeight: FontWeight.bold)),
-                // SizedBox(height: 10),
                 Container(
                   width: double.infinity,
                   height: size.height * 0.35,
@@ -280,7 +199,8 @@ class _home_page extends State<home_page> {
                 //         // size: 80
                 //         color: Colors.white),
                 //     onPressed: () {
-                //       _getCurrentLocation();
+                //       GetAddressFromLatLong(_currentPosition.latitude,
+                //           _currentPosition.longitude);
                 //     },
                 //     style: ElevatedButton.styleFrom(
                 //       fixedSize: const Size(180, 50),
@@ -291,46 +211,36 @@ class _home_page extends State<home_page> {
                 //     label: const Text("Get Location",
                 //         style: TextStyle(fontSize: 20.0, color: Colors.white))),
                 const SizedBox(height: 20),
-                // Text(_currentAddress,
-                //     style: const TextStyle(
-                //         fontSize: 19.0,
-                //         fontWeight: FontWeight.w500,
-                //         color: Colors.white)),
-                // SizedBox(
-                //   height: 3,
-                // ),
-                // if (_address != null)
-                //   Text(
-                //     "Address: $_address",
-                //     style: TextStyle(
-                //       fontSize: 16,
-                //       color: Colors.white,
-                //     ),
-                //   ),
-                // Text("Bintulu, Sarawak",
-                //     style: TextStyle(
-                //         fontSize: 19,
-                //         color: Colors.white,
-                //         fontWeight: FontWeight.bold)),
+                SizedBox(
+                  height: 3,
+                ),
                 Container(
-                  width: double.infinity,
-                  margin: EdgeInsets.symmetric(
-                    vertical: 8,
-                    horizontal: 100,
-                  ),
-                  child: RaisedButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(40),
-                    ),
+                  width: 350,
+                  height: 40,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white),
+                  child: Align(
+                    alignment: Alignment.center,
                     child: Text(
-                      'Bintulu, Sarawak',
+                      "Address: $Address",
                       style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                      ),
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
                     ),
-                    color: Colors.white,
-                    onPressed: () {},
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Latitude: ${_currentPosition.latitude}, Longitude: ${_currentPosition.longitude}",
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
                 SizedBox(height: 15),
@@ -345,7 +255,35 @@ class _home_page extends State<home_page> {
                         padding: const EdgeInsets.all(20),
                         child: Column(
                           children: <Widget>[
-                            Row(children: const <Widget>[
+                            Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                height: 400,
+                                width: MediaQuery.of(context).size.width * 0.9,
+                                child: Stack(children: [
+                                  GoogleMap(
+                                    onMapCreated: _onMapCreated,
+                                    myLocationButtonEnabled: true,
+                                    zoomGesturesEnabled: true,
+                                    onCameraMove: _onCameraMove,
+                                    compassEnabled: true,
+                                    mapType: MapType.hybrid,
+                                    initialCameraPosition: CameraPosition(
+                                      target: _initialcameraposition,
+                                      zoom: 17,
+                                    ),
+                                    // FloatingActionButton(
+                                    //     onPressed: () =>
+                                    //         _googleMapController.animateCamera(
+                                    //             CameraUpdate.newCameraPosition(
+                                    //                 _initialcameraposition)),
+                                    //     child: const Icon(
+                                    //         Icons.center_focus_strong)),
+                                  ),
+                                ])),
+                            SizedBox(height: 20),
+                            Row(children: <Widget>[
                               Expanded(
                                 child: Text(
                                   'Solar Irradiance',
@@ -356,55 +294,55 @@ class _home_page extends State<home_page> {
                                   textAlign: TextAlign.left,
                                 ),
                               ),
-                              // Expanded(
-                              //     child: Align(
-                              //         alignment: Alignment.topRight,
-                              //         child: ToggleButtons(
-                              //             fillColor: Colors.lightBlue,
-                              //             selectedColor: Colors.blueAccent,
-                              //             borderRadius:
-                              //                 BorderRadius.circular(20),
-                              //             isSelected: isSelected,
-                              //             onPressed: (int index) {
-                              //               setState(() {
-                              //                 for (int buttonIndex = 0;
-                              //                     buttonIndex <
-                              //                         isSelected.length;
-                              //                     buttonIndex++) {
-                              //                   if (buttonIndex == index) {
-                              //                     isSelected[buttonIndex] =
-                              //                         true;
-                              //                   } else {
-                              //                     isSelected[buttonIndex] =
-                              //                         false;
-                              //                   }
-                              //                 }
-                              //               });
-                              //             },
-                              //             children: const <Widget>[
-                              //               Padding(
-                              //                 padding: EdgeInsets.all(15.0),
-                              //                 child: Text(
-                              //                   "Daily",
-                              //                   style: TextStyle(
-                              //                     fontWeight: FontWeight.bold,
-                              //                     fontSize: 15,
-                              //                     color: Colors.white,
-                              //                   ),
-                              //                 ),
-                              //               ),
-                              //               Padding(
-                              //                 padding: EdgeInsets.all(15.0),
-                              //                 child: Text(
-                              //                   "Yearly",
-                              //                   style: TextStyle(
-                              //                     fontWeight: FontWeight.bold,
-                              //                     fontSize: 15,
-                              //                     color: Colors.white,
-                              //                   ),
-                              //                 ),
-                              //               )
-                              //             ]))),
+                              Expanded(
+                                  child: Align(
+                                      alignment: Alignment.topRight,
+                                      child: ToggleButtons(
+                                          fillColor: Colors.lightBlue,
+                                          selectedColor: Colors.blueAccent,
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          isSelected: isSelected,
+                                          onPressed: (int index) {
+                                            setState(() {
+                                              for (int buttonIndex = 0;
+                                                  buttonIndex <
+                                                      isSelected.length;
+                                                  buttonIndex++) {
+                                                if (buttonIndex == index) {
+                                                  isSelected[buttonIndex] =
+                                                      !isSelected[buttonIndex];
+                                                } else {
+                                                  isSelected[buttonIndex] =
+                                                      false;
+                                                }
+                                              }
+                                            });
+                                          },
+                                          children: const <Widget>[
+                                            Padding(
+                                              padding: EdgeInsets.all(15.0),
+                                              child: Text(
+                                                "Daily",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsets.all(15.0),
+                                              child: Text(
+                                                "Yearly",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            )
+                                          ]))),
                             ]),
                             SizedBox(height: 15),
                             AspectRatio(
@@ -714,30 +652,6 @@ class _home_page extends State<home_page> {
                             SizedBox(
                               height: 30,
                             ),
-                            Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                height: 500,
-                                width: MediaQuery.of(context).size.width * 0.8,
-                                child: Stack(children: [
-                                  GoogleMap(
-                                    onMapCreated: _onMapCreated,
-                                    myLocationButtonEnabled: true,
-                                    mapType: MapType.normal,
-                                    initialCameraPosition: CameraPosition(
-                                      target: _initialcameraposition,
-                                      zoom: 10,
-                                    ),
-                                  ),
-                                  // FloatingActionButton(
-                                  //     onPressed: () =>
-                                  //         _googleMapController.animateCamera(
-                                  //             CameraUpdate.newCameraPosition(
-                                  //                 _initialCameraPosition)),
-                                  //     child: const Icon(
-                                  //         Icons.center_focus_strong)),
-                                ])),
                           ],
                         ))),
               ],
@@ -1112,17 +1026,3 @@ class _home_page extends State<home_page> {
     );
   }
 }
-
-                            // child: ExpansionTile(
-                            //   title: Text(
-                            //     'Time',
-                            //     style: TextStyle(
-                            //         fontWeight: FontWeight.bold,
-                            //         fontSize: 20,
-                            //         color: Colors.white),
-                            //   ),
-                            //   children: <Widget>[
-                            //     ListTile(title: Text('Year')),
-                            //     ListTile(title: Text('Daily'))
-                            //   ],
-
