@@ -8,7 +8,6 @@ import 'package:myapp/frontend/detail_screen.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geocoding/geocoding.dart' hide Location;
 
-
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -17,13 +16,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   late LocationData _currentPosition;
   late Marker marker;
   late Location location = Location();
   late GoogleMapController _googleMapController;
   late GoogleMapController _controller;
-  LatLng _initialcameraposition = LatLng(0.5937, 0.9629);
+  LatLng _initialcameraposition = const LatLng(0.5937, 0.9629);
   bool showAvg = false;
   late List<bool> isSelected = [true, false];
   List<Color> gradientColors = [
@@ -34,15 +32,97 @@ class _HomePageState extends State<HomePage> {
   final Color barBackgroundColor = const Color(0xff72d8bf);
   int touchedIndex = -1;
   late LatLng _initialPosition;
-  final Set<Marker> _markers = {};
   late LatLng _lastMapPosition = _initialPosition;
   String address = '';
   late Completer<GoogleMapController> controller1;
+  String initialValue = 'Select Panel';
+  String currentValue = "";
+  int powerOutput = 0;
+  double efficiency = 0;
+  var itemList = [
+    'Select Panel',
+    'SunPower Maxeon 3',
+    'LG Neon R',
+    'RECT Alpha Pure',
+    'Panasonic EverVolt',
+    'Silfab Solar Elite BK',
+    'Jinko Solar Tigert N-type 66TR',
+    'FuturaSun FU M Zebra',
+    'Hyundai HiE-S400UF',
+    'Trina Solar Vertex S',
+    'SPIC Solar Andromeda',
+  ];
+  void getDropDownItem() {
+    setState(() {
+      currentValue = initialValue;
+    });
+  }
+  
+  AssetImage image1 = const AssetImage('assets/solarpanel/sunpower.jpg');
+  Image image2 = Image.network('https://www.lg.com/global/images/business/Q1C-A6/1100-01.jpg');
+  AssetImage image3 = const AssetImage('assets/solarpanel/recalpha.png');
+  AssetImage image4 = const AssetImage('assets/solarpanel/panasonic.png');
+  AssetImage image5 = const AssetImage('assets/solarpanel/sil.jpg'); 
+  AssetImage image6 = const AssetImage('assets/solarpanel/Tiger.jpg');
+  AssetImage image7 = const AssetImage('assets/solarpanel/futuresun.png');
+  AssetImage image8 = const AssetImage('assets/solarpanel/Hyundai.jpg');
+  AssetImage image9 = const AssetImage('assets/solarpanel/trina.png');
+  AssetImage image10 = const AssetImage('assets/solarpanel/spic.jpg');
+
+  downButtonFunction() async {
+    getDropDownItem();
+    switch (currentValue) {
+      case 'Select Panel':
+        break;
+      case 'SunPower Maxeon 3':
+        powerOutput = 400;
+        efficiency = 22.8;
+        break;
+      case 'LG Neon R LG400Q1C-A6':
+        powerOutput = 400;
+        efficiency = 22.1;
+        break;
+      case 'REC Alpha Pure':
+        powerOutput = 405;
+        efficiency = 21.9;
+        break;
+      case 'Panasonic EverVolt':
+        powerOutput = 380;
+        efficiency = 21.7;
+        break;
+      case 'Silfab Solar Elite BK':
+        powerOutput = 405;
+        efficiency = 21.4;
+        break;
+      case 'Jinko Solar Tiger N-type 66TR':
+        powerOutput = 410;
+        efficiency = 21.4;
+        break;
+      case 'FuturaSun FU M Zebra':
+        powerOutput = 360;
+        efficiency = 21.3;
+        break;
+      case 'Hyundai HiE-S400UF':
+        powerOutput = 400;
+        efficiency = 21.3;
+        break;
+      case 'Trina Solar Vertex S':
+        powerOutput = 405;
+        efficiency = 21.1;
+        break;
+      case 'SPIC Solar Andromeda':
+        powerOutput = 355;
+        efficiency = 21.0;
+        break;
+      // default:
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     getLoc();
+    downButtonFunction();
   }
 
   @override
@@ -110,7 +190,6 @@ class _HomePageState extends State<HomePage> {
       });
     });
   }
-
 
   BarChartGroupData makeGroupData(
     int x,
@@ -495,7 +574,7 @@ class _HomePageState extends State<HomePage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Your Dashboard',
+                      const Text('Your Dashboard',
                           style: TextStyle(
                               fontSize: 24,
                               color: Colors.white,
@@ -505,13 +584,14 @@ class _HomePageState extends State<HomePage> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => DetailsScreen()));
+                                    builder: (context) =>
+                                        const DetailsScreen()));
                           },
                           elevation: 2.0,
-                          padding: EdgeInsets.all(8),
-                          shape: CircleBorder(),
+                          padding: const EdgeInsets.all(8),
+                          shape: const CircleBorder(),
                           fillColor: Colors.white30,
-                          child: Icon(Icons.info_outline_rounded,
+                          child: const Icon(Icons.info_outline_rounded,
                               color: Colors.white))
                     ],
                   ),
@@ -524,7 +604,7 @@ class _HomePageState extends State<HomePage> {
                           image: AssetImage("assets/images/intropic.png"))),
                 ),
                 const SizedBox(height: 20),
-                SizedBox(
+                const SizedBox(
                   height: 3,
                 ),
                 Container(
@@ -537,26 +617,25 @@ class _HomePageState extends State<HomePage> {
                     alignment: Alignment.center,
                     child: Text(
                       "Address: $address",
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Align(
                   alignment: Alignment.center,
                   child: Text(
                     "Latitude: ${_currentPosition.latitude}, Longitude: ${_currentPosition.longitude}",
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 16,
                         color: Colors.white,
                         fontWeight: FontWeight.bold),
                   ),
                 ),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 Container(
                     // margin: EdgeInsets.only(top: size.height * 0.5),
                     width: double.infinity,
@@ -595,9 +674,9 @@ class _HomePageState extends State<HomePage> {
                                     //         Icons.center_focus_strong)),
                                   ),
                                 ])),
-                            SizedBox(height: 20),
+                            const SizedBox(height: 20),
                             Row(children: <Widget>[
-                              Expanded(
+                              const Expanded(
                                 child: Text(
                                   'Solar Irradiance',
                                   style: TextStyle(
@@ -657,7 +736,7 @@ class _HomePageState extends State<HomePage> {
                                             )
                                           ]))),
                             ]),
-                            SizedBox(height: 15),
+                            const SizedBox(height: 15),
                             AspectRatio(
                               aspectRatio: 1.20,
                               child: Container(
@@ -704,7 +783,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                             ),
-                            SizedBox(height: 15),
+                            const SizedBox(height: 15),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -719,11 +798,11 @@ class _HomePageState extends State<HomePage> {
                                           decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(20),
-                                            gradient: LinearGradient(
+                                            gradient: const LinearGradient(
                                               begin: Alignment.topCenter,
                                               end: Alignment.bottomCenter,
-                                              stops: const [0.1, 0.4, 0.7, 0.9],
-                                              colors: const [
+                                              stops: [0.1, 0.4, 0.7, 0.9],
+                                              colors: [
                                                 Color(0xFF3594DD),
                                                 Color(0xFF4563DB),
                                                 Color(0xFF5036D5),
@@ -741,19 +820,19 @@ class _HomePageState extends State<HomePage> {
                                                   "assets/images/wind.png",
                                                   width: 64.0,
                                                 ),
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 10.0,
                                                 ),
-                                                Text("Wind Speed",
+                                                const Text("Wind Speed",
                                                     style: TextStyle(
                                                         color: Colors.white,
                                                         fontWeight:
                                                             FontWeight.bold,
                                                         fontSize: 20.0)),
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 5.0,
                                                 ),
-                                                Text("69 mph",
+                                                const Text("69 mph",
                                                     style: TextStyle(
                                                         color: Colors.white,
                                                         fontWeight:
@@ -766,11 +845,11 @@ class _HomePageState extends State<HomePage> {
                                           decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(20),
-                                            gradient: LinearGradient(
+                                            gradient: const LinearGradient(
                                               begin: Alignment.topCenter,
                                               end: Alignment.bottomCenter,
-                                              stops: const [0.1, 0.4, 0.7, 0.9],
-                                              colors: const [
+                                              stops: [0.1, 0.4, 0.7, 0.9],
+                                              colors: [
                                                 Color(0xFF3594DD),
                                                 Color(0xFF4563DB),
                                                 Color(0xFF5036D5),
@@ -788,19 +867,19 @@ class _HomePageState extends State<HomePage> {
                                                   "assets/images/temperature.png",
                                                   width: 64.0,
                                                 ),
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 10.0,
                                                 ),
-                                                Text("Temperature",
+                                                const Text("Temperature",
                                                     style: TextStyle(
                                                         color: Colors.white,
                                                         fontWeight:
                                                             FontWeight.bold,
                                                         fontSize: 20.0)),
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 5.0,
                                                 ),
-                                                Text("69°C",
+                                                const Text("69°C",
                                                     style: TextStyle(
                                                         color: Colors.white,
                                                         fontWeight:
@@ -813,11 +892,11 @@ class _HomePageState extends State<HomePage> {
                                           decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(20),
-                                            gradient: LinearGradient(
+                                            gradient: const LinearGradient(
                                               begin: Alignment.topCenter,
                                               end: Alignment.bottomCenter,
-                                              stops: const [0.1, 0.4, 0.7, 0.9],
-                                              colors: const [
+                                              stops: [0.1, 0.4, 0.7, 0.9],
+                                              colors: [
                                                 Color(0xFF3594DD),
                                                 Color(0xFF4563DB),
                                                 Color(0xFF5036D5),
@@ -835,19 +914,19 @@ class _HomePageState extends State<HomePage> {
                                                   "assets/images/water.png",
                                                   width: 64.0,
                                                 ),
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 10.0,
                                                 ),
-                                                Text("Humidity",
+                                                const Text("Humidity",
                                                     style: TextStyle(
                                                         color: Colors.white,
                                                         fontWeight:
                                                             FontWeight.bold,
                                                         fontSize: 20.0)),
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 5.0,
                                                 ),
-                                                Text("69 g/kg",
+                                                const Text("69 g/kg",
                                                     style: TextStyle(
                                                         color: Colors.white,
                                                         fontWeight:
@@ -860,11 +939,11 @@ class _HomePageState extends State<HomePage> {
                                           decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(20),
-                                            gradient: LinearGradient(
+                                            gradient: const LinearGradient(
                                               begin: Alignment.topCenter,
                                               end: Alignment.bottomCenter,
-                                              stops: const [0.1, 0.4, 0.7, 0.9],
-                                              colors: const [
+                                              stops: [0.1, 0.4, 0.7, 0.9],
+                                              colors: [
                                                 Color(0xFF3594DD),
                                                 Color(0xFF4563DB),
                                                 Color(0xFF5036D5),
@@ -882,19 +961,19 @@ class _HomePageState extends State<HomePage> {
                                                   "assets/images/uv.png",
                                                   width: 64.0,
                                                 ),
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 10.0,
                                                 ),
-                                                Text("UV Index",
+                                                const Text("Cloud Around",
                                                     style: TextStyle(
                                                         color: Colors.white,
                                                         fontWeight:
                                                             FontWeight.bold,
                                                         fontSize: 20.0)),
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 5.0,
                                                 ),
-                                                Text("69 mW/cm2",
+                                                const Text("69 mW/cm2",
                                                     style: TextStyle(
                                                         color: Colors.white,
                                                         fontWeight:
@@ -909,7 +988,49 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 15),
+                            const SizedBox(height: 15),
+                            Container(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                              decoration: BoxDecoration(
+                                  gradient: const LinearGradient(
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                    stops: [0.1, 0.4, 0.7, 0.9],
+                                    colors: [
+                                      Color(0xFF3594DD),
+                                      Color(0xFF4563DB),
+                                      Color(0xFF5036D5),
+                                      Color(0xFF5B16D0),
+                                    ],
+                                  ),
+                                  borderRadius: BorderRadius.circular(20)),
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                              child: DropdownButton(
+                                isExpanded: true,
+                                iconEnabledColor: Colors.white,
+                                style: const TextStyle(
+                                    color: Colors.white, fontSize: 16),
+                                dropdownColor: const Color(0xFF5036D5),
+                                focusColor: Colors.black,
+                                value: initialValue,
+                                icon: const Icon(Icons.keyboard_arrow_down),
+                                items: itemList.map((String items) {
+                                  return DropdownMenuItem(
+                                      value: items, child: Text(items));
+                                }).toList(),
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    initialValue = newValue!;
+                                  });
+                                },
+                              ),
+                            ),
+                            Container(decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),
+                            color: Colors.white),
+                            child: Text(powerOutput.toString())),
+                            const SizedBox(height: 15),
                             Container(
                                 width: 350,
                                 height: 350,
@@ -919,7 +1040,7 @@ class _HomePageState extends State<HomePage> {
                                 child: Card(
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(18)),
-                                  color: Color.fromRGBO(43, 28, 154, 100),
+                                  color: const Color.fromRGBO(43, 28, 154, 100),
                                   child: Stack(
                                     children: <Widget>[
                                       Padding(
@@ -931,7 +1052,7 @@ class _HomePageState extends State<HomePage> {
                                               MainAxisAlignment.start,
                                           mainAxisSize: MainAxisSize.max,
                                           children: <Widget>[
-                                            Text(
+                                            const Text(
                                               'Estimated Savings',
                                               style: TextStyle(
                                                   color: Colors.yellow,
@@ -962,7 +1083,7 @@ class _HomePageState extends State<HomePage> {
                                     ],
                                   ),
                                 )),
-                            SizedBox(
+                            const SizedBox(
                               height: 30,
                             ),
                           ],
