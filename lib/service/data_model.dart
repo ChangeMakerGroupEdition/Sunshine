@@ -94,6 +94,15 @@ class YearRangeDataset {
   }
 }
 
+// class Combined {
+//   final YearRangeDataset yearData;
+//   final HourlyDataset hourData;
+
+//   Combined({
+//     required this.yearData,
+//     required this.hourData
+//   });
+// }
 
 class HourlyDataset {
   final List<double> dwn;

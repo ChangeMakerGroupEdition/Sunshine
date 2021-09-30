@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -7,6 +8,7 @@ import 'package:location/location.dart';
 import 'package:myapp/frontend/detail_screen.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geocoding/geocoding.dart' hide Location;
+import 'package:myapp/service/data_model.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -39,6 +41,7 @@ class _HomePageState extends State<HomePage> {
   String currentValue = "";
   int powerOutput = 0;
   double efficiency = 0;
+
   var itemList = [
     'Select Panel',
     'SunPower Maxeon 3',
@@ -52,6 +55,10 @@ class _HomePageState extends State<HomePage> {
     'Trina Solar Vertex S',
     'SPIC Solar Andromeda',
   ];
+
+  late Future<YearRangeDataset> yearDataset;
+  late Future<HourlyDataset> hourDataset;
+
   void getDropDownItem() {
     setState(() {
       currentValue = initialValue;
@@ -123,6 +130,8 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     getLoc();
     downButtonFunction();
+    hourDataset = fetchHourlyDataset();
+    yearDataset = fetchFiveYearDataset();
   }
 
   @override
@@ -346,7 +355,120 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  LineChartData mainData() {
+  LineChartData mainData(AsyncSnapshot snapshot, String type) {
+
+    List<double> y = snapshot.data.dwn.getLastYearGraph();
+    List<FlSpot> spots = List<FlSpot>.generate(y.length, (int index) {
+      return FlSpot(index.toDouble(), y[index]);
+    });
+    FlTitlesData titles = FlTitlesData();
+    
+    if (type == '5years') {
+      List<double> y = snapshot.data.dwn.getFiveYearGraph();
+      List<FlSpot> spots = List<FlSpot>.generate(y.length, (int index) {
+        return FlSpot(index.toDouble(), y[index]);
+      });
+      FlTitlesData titles = FlTitlesData(
+        show: true,
+        rightTitles: SideTitles(showTitles: false),
+        topTitles: SideTitles(showTitles: false),
+        bottomTitles: SideTitles(
+          showTitles: true,
+          reservedSize: 22,
+          interval: 1,
+          getTextStyles: (context, value) => const TextStyle(
+              color: Color(0xff68737d),
+              fontWeight: FontWeight.bold,
+              fontSize: 16),
+          getTitles: (value) {
+            switch (value.toInt()) {
+              case 0:
+                return '2016';
+              case 1:
+                return '2017';
+              case 2:
+                return '2018';
+              case 3:
+                return '2019';
+              case 4:
+                return '2020';
+            }
+            return '';
+          },
+          margin: 8,
+        ),
+        leftTitles: SideTitles(
+          showTitles: true,
+          interval: 1,
+          getTextStyles: (context, value) => const TextStyle(
+            color: Color(0xff67727d),
+            fontWeight: FontWeight.bold,
+            fontSize: 15,
+          ),
+          getTitles: (value) {
+            if(value.toDouble() / 100 == 0){
+              return value.toString()+" kWh";
+            }
+            return '';
+          },
+          reservedSize: 32,
+          margin: 12,
+        ),
+      );
+    } else if (type == '12months') {
+      List<double> y = snapshot.data.dwn.getLastYearGraph();
+      List<FlSpot> spots = List<FlSpot>.generate(y.length, (int index) {
+        return FlSpot(index.toDouble(), y[index]);
+      });
+      FlTitlesData titles = FlTitlesData(
+        show: true,
+        rightTitles: SideTitles(showTitles: false),
+        topTitles: SideTitles(showTitles: false),
+        bottomTitles: SideTitles(
+          showTitles: true,
+          reservedSize: 22,
+          interval: 1,
+          getTextStyles: (context, value) => const TextStyle(
+              color: Color(0xff68737d),
+              fontWeight: FontWeight.bold,
+              fontSize: 16),
+          getTitles: (value) {
+            switch (value.toInt()) {
+              case 0:
+                return 'Jan';
+              case 2:
+                return 'Mac';
+              case 5:
+                return 'Jun';
+              case 8:
+                return 'Sep';
+              case 11:
+                return 'Dec';
+            }
+            return '';
+          },
+          margin: 8,
+        ),
+        leftTitles: SideTitles(
+          showTitles: true,
+          interval: 1,
+          getTextStyles: (context, value) => const TextStyle(
+            color: Color(0xff67727d),
+            fontWeight: FontWeight.bold,
+            fontSize: 15,
+          ),
+          getTitles: (value) {
+            if(value.toDouble() / 100 == 0){
+              return value.toString()+" kWh";
+            }
+            return '';
+          },
+          reservedSize: 32,
+          margin: 12,
+        ),
+      );
+    }
+ 
     return LineChartData(
       gridData: FlGridData(
         show: true,
@@ -364,73 +486,17 @@ class _HomePageState extends State<HomePage> {
           );
         },
       ),
-      titlesData: FlTitlesData(
-        show: true,
-        rightTitles: SideTitles(showTitles: false),
-        topTitles: SideTitles(showTitles: false),
-        bottomTitles: SideTitles(
-          showTitles: true,
-          reservedSize: 22,
-          interval: 1,
-          getTextStyles: (context, value) => const TextStyle(
-              color: Color(0xff68737d),
-              fontWeight: FontWeight.bold,
-              fontSize: 16),
-          getTitles: (value) {
-            switch (value.toInt()) {
-              case 2:
-                return 'MAR';
-              case 5:
-                return 'JUN';
-              case 8:
-                return 'SEP';
-            }
-            return '';
-          },
-          margin: 8,
-        ),
-        leftTitles: SideTitles(
-          showTitles: true,
-          interval: 1,
-          getTextStyles: (context, value) => const TextStyle(
-            color: Color(0xff67727d),
-            fontWeight: FontWeight.bold,
-            fontSize: 15,
-          ),
-          getTitles: (value) {
-            switch (value.toInt()) {
-              case 1:
-                return '10kWh';
-              case 3:
-                return '30kWh';
-              case 5:
-                return '50kWh';
-            }
-            return '';
-          },
-          reservedSize: 32,
-          margin: 12,
-        ),
-      ),
+      titlesData: titles,
       borderData: FlBorderData(
-          show: true,
-          border: Border.all(color: const Color(0xff37434d), width: 1)),
-      minX: 0,
-      maxX: 11,
-      minY: 0,
-      maxY: 6,
-      lineBarsData: [
+        show: true,
+        border: Border.all(color: const Color(0xff37434d), width: 1)),
+        minX: 0,
+        maxX: y.length.toDouble()-1, 
+        minY: 0,
+        maxY: y.reduce(max) + 50,
+        lineBarsData: [
         LineChartBarData(
-          spots: [
-            FlSpot(0, 3),
-            FlSpot(2.6, 2),
-            FlSpot(4.9, 5),
-            FlSpot(6.8, 3.1),
-            FlSpot(8, 4),
-            FlSpot(9.5, 3),
-            FlSpot(11, 4),
-          ],
-          isCurved: true,
+          spots: spots,
           colors: gradientColors,
           barWidth: 5,
           isStrokeCapRound: true,
@@ -445,8 +511,8 @@ class _HomePageState extends State<HomePage> {
         ),
       ],
     );
-  }
-
+  }   
+  
   LineChartData avgData() {
     return LineChartData(
       lineTouchData: LineTouchData(enabled: false),
@@ -697,16 +763,11 @@ class _HomePageState extends State<HomePage> {
                                           isSelected: isSelected,
                                           onPressed: (int index) {
                                             setState(() {
-                                              for (int buttonIndex = 0;
-                                                  buttonIndex <
-                                                      isSelected.length;
-                                                  buttonIndex++) {
+                                              for (int buttonIndex = 0; buttonIndex < isSelected.length; buttonIndex++) {
                                                 if (buttonIndex == index) {
-                                                  isSelected[buttonIndex] =
-                                                      !isSelected[buttonIndex];
+                                                  isSelected[buttonIndex] = !isSelected[buttonIndex];
                                                 } else {
-                                                  isSelected[buttonIndex] =
-                                                      false;
+                                                  isSelected[buttonIndex] = false;
                                                 }
                                               }
                                             });
@@ -734,7 +795,8 @@ class _HomePageState extends State<HomePage> {
                                                 ),
                                               ),
                                             )
-                                          ]))),
+                                          ])
+                                      )),
                             ]),
                             const SizedBox(height: 15),
                             AspectRatio(
@@ -758,8 +820,20 @@ class _HomePageState extends State<HomePage> {
                                       left: 10.0,
                                       top: 20,
                                       bottom: 12),
-                                  child: LineChart(
-                                    showAvg ? avgData() : mainData(),
+                                  // child: LineChart(
+                                  //       showAvg ? avgData() : mainData(),
+                                  // ),
+                                  child: FutureBuilder(
+                                    future: yearDataset, 
+                                    builder: (context, snapshot) {
+                                      if (snapshot.hasData) {
+                                        //return LineChart(mainData(snapshot, '5years'));
+                                        return LineChart(mainData(snapshot, '12months'));
+                                      } else if (snapshot.hasError) {
+                                        return Text("${snapshot.error}");
+                                      }
+                                      return const CircularProgressIndicator();
+                                    }
                                   ),
                                 ),
                               ),
