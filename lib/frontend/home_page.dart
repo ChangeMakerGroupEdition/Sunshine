@@ -24,7 +24,6 @@ class _HomePageState extends State<HomePage> {
   late GoogleMapController _googleMapController;
   late GoogleMapController _controller;
   LatLng _initialcameraposition = const LatLng(0.5937, 0.9629);
-  bool showAvg = false;
   late List<bool> isSelected = [true, false];
   List<Color> gradientColors = [
     const Color(0xff23b6e6),
@@ -41,6 +40,8 @@ class _HomePageState extends State<HomePage> {
   String currentValue = "";
   int powerOutput = 0;
   double efficiency = 0;
+  String initialTimeRange = "Week";
+  int saving = 300;
 
   var itemList = [
     'Select Panel',
@@ -56,6 +57,8 @@ class _HomePageState extends State<HomePage> {
     'SPIC Solar Andromeda',
   ];
 
+  var time_range = ["Week", "Month", "Year"];
+
   late Future<YearRangeDataset> yearDataset;
   late Future<HourlyDataset> hourDataset;
 
@@ -64,12 +67,13 @@ class _HomePageState extends State<HomePage> {
       currentValue = initialValue;
     });
   }
-  
+
   AssetImage image1 = const AssetImage('assets/solarpanel/sunpower.jpg');
-  Image image2 = Image.network('https://www.lg.com/global/images/business/Q1C-A6/1100-01.jpg');
+  Image image2 = Image.network(
+      'https://www.lg.com/global/images/business/Q1C-A6/1100-01.jpg');
   AssetImage image3 = const AssetImage('assets/solarpanel/recalpha.png');
   AssetImage image4 = const AssetImage('assets/solarpanel/panasonic.png');
-  AssetImage image5 = const AssetImage('assets/solarpanel/sil.jpg'); 
+  AssetImage image5 = const AssetImage('assets/solarpanel/sil.jpg');
   AssetImage image6 = const AssetImage('assets/solarpanel/Tiger.jpg');
   AssetImage image7 = const AssetImage('assets/solarpanel/futuresun.png');
   AssetImage image8 = const AssetImage('assets/solarpanel/Hyundai.jpg');
@@ -356,13 +360,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   LineChartData mainData(AsyncSnapshot snapshot, String type) {
-
     List<double> y = snapshot.data.dwn.getLastYearGraph();
     List<FlSpot> spots = List<FlSpot>.generate(y.length, (int index) {
       return FlSpot(index.toDouble(), y[index]);
     });
     FlTitlesData titles = FlTitlesData();
-    
+
     if (type == '5years') {
       List<double> y = snapshot.data.dwn.getFiveYearGraph();
       List<FlSpot> spots = List<FlSpot>.generate(y.length, (int index) {
@@ -406,8 +409,8 @@ class _HomePageState extends State<HomePage> {
             fontSize: 15,
           ),
           getTitles: (value) {
-            if(value.toDouble() / 100 == 0){
-              return value.toString()+" kWh";
+            if (value.toDouble() / 100 == 0) {
+              return value.toString() + " kWh";
             }
             return '';
           },
@@ -458,8 +461,8 @@ class _HomePageState extends State<HomePage> {
             fontSize: 15,
           ),
           getTitles: (value) {
-            if(value.toDouble() / 100 == 0){
-              return value.toString()+" kWh";
+            if (value.toDouble() / 100 == 0) {
+              return value.toString() + " kWh";
             }
             return '';
           },
@@ -468,7 +471,7 @@ class _HomePageState extends State<HomePage> {
         ),
       );
     }
- 
+
     return LineChartData(
       gridData: FlGridData(
         show: true,
@@ -488,13 +491,13 @@ class _HomePageState extends State<HomePage> {
       ),
       titlesData: titles,
       borderData: FlBorderData(
-        show: true,
-        border: Border.all(color: const Color(0xff37434d), width: 1)),
-        minX: 0,
-        maxX: y.length.toDouble()-1, 
-        minY: 0,
-        maxY: y.reduce(max) + 50,
-        lineBarsData: [
+          show: true,
+          border: Border.all(color: const Color(0xff37434d), width: 1)),
+      minX: 0,
+      maxX: y.length.toDouble() - 1,
+      minY: 0,
+      maxY: y.reduce(max) + 50,
+      lineBarsData: [
         LineChartBarData(
           spots: spots,
           colors: gradientColors,
@@ -508,116 +511,6 @@ class _HomePageState extends State<HomePage> {
             colors:
                 gradientColors.map((color) => color.withOpacity(0.3)).toList(),
           ),
-        ),
-      ],
-    );
-  }   
-  
-  LineChartData avgData() {
-    return LineChartData(
-      lineTouchData: LineTouchData(enabled: false),
-      gridData: FlGridData(
-        show: true,
-        drawHorizontalLine: true,
-        getDrawingVerticalLine: (value) {
-          return FlLine(
-            color: const Color(0xff37434d),
-            strokeWidth: 1,
-          );
-        },
-        getDrawingHorizontalLine: (value) {
-          return FlLine(
-            color: const Color(0xff37434d),
-            strokeWidth: 1,
-          );
-        },
-      ),
-      titlesData: FlTitlesData(
-        show: true,
-        bottomTitles: SideTitles(
-          showTitles: true,
-          reservedSize: 22,
-          getTextStyles: (context, value) => const TextStyle(
-              color: Color(0xff68737d),
-              fontWeight: FontWeight.bold,
-              fontSize: 16),
-          getTitles: (value) {
-            switch (value.toInt()) {
-              case 2:
-                return 'MAR';
-              case 5:
-                return 'JUN';
-              case 8:
-                return 'SEP';
-            }
-            return '';
-          },
-          margin: 8,
-          interval: 1,
-        ),
-        leftTitles: SideTitles(
-          showTitles: true,
-          getTextStyles: (context, value) => const TextStyle(
-            color: Color(0xff67727d),
-            fontWeight: FontWeight.bold,
-            fontSize: 15,
-          ),
-          getTitles: (value) {
-            switch (value.toInt()) {
-              case 1:
-                return '1k';
-              case 3:
-                return '3k';
-              case 5:
-                return '5k';
-            }
-            return '';
-          },
-          reservedSize: 32,
-          interval: 1,
-          margin: 12,
-        ),
-        topTitles: SideTitles(showTitles: false),
-        rightTitles: SideTitles(showTitles: false),
-      ),
-      borderData: FlBorderData(
-          show: true,
-          border: Border.all(color: const Color(0xff37434d), width: 1)),
-      minX: 0,
-      maxX: 11,
-      minY: 0,
-      maxY: 6,
-      lineBarsData: [
-        LineChartBarData(
-          spots: [
-            FlSpot(0, 3.44),
-            FlSpot(2.6, 3.44),
-            FlSpot(4.9, 3.44),
-            FlSpot(6.8, 3.44),
-            FlSpot(8, 3.44),
-            FlSpot(9.5, 3.44),
-            FlSpot(11, 3.44),
-          ],
-          isCurved: true,
-          colors: [
-            ColorTween(begin: gradientColors[0], end: gradientColors[1])
-                .lerp(0.2)!,
-            ColorTween(begin: gradientColors[0], end: gradientColors[1])
-                .lerp(0.2)!,
-          ],
-          barWidth: 5,
-          isStrokeCapRound: true,
-          dotData: FlDotData(
-            show: false,
-          ),
-          belowBarData: BarAreaData(show: true, colors: [
-            ColorTween(begin: gradientColors[0], end: gradientColors[1])
-                .lerp(0.2)!
-                .withOpacity(0.1),
-            ColorTween(begin: gradientColors[0], end: gradientColors[1])
-                .lerp(0.2)!
-                .withOpacity(0.1),
-          ]),
         ),
       ],
     );
@@ -669,18 +562,14 @@ class _HomePageState extends State<HomePage> {
                       image: DecorationImage(
                           image: AssetImage("assets/images/intropic.png"))),
                 ),
-                const SizedBox(height: 20),
-                const SizedBox(
-                  height: 3,
-                ),
+                const SizedBox(height: 10),
                 Container(
                   width: 350,
-                  height: 40,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: Colors.white),
-                  child: Align(
-                    alignment: Alignment.center,
+                  child: Padding(
+                    padding: const EdgeInsets.all(5),
                     child: Text(
                       "Address: $address",
                       style: const TextStyle(
@@ -731,13 +620,6 @@ class _HomePageState extends State<HomePage> {
                                       target: _initialcameraposition,
                                       zoom: 17,
                                     ),
-                                    // FloatingActionButton(
-                                    //     onPressed: () =>
-                                    //         _googleMapController.animateCamera(
-                                    //             CameraUpdate.newCameraPosition(
-                                    //                 _initialcameraposition)),
-                                    //     child: const Icon(
-                                    //         Icons.center_focus_strong)),
                                   ),
                                 ])),
                             const SizedBox(height: 20),
@@ -763,11 +645,16 @@ class _HomePageState extends State<HomePage> {
                                           isSelected: isSelected,
                                           onPressed: (int index) {
                                             setState(() {
-                                              for (int buttonIndex = 0; buttonIndex < isSelected.length; buttonIndex++) {
+                                              for (int buttonIndex = 0;
+                                                  buttonIndex <
+                                                      isSelected.length;
+                                                  buttonIndex++) {
                                                 if (buttonIndex == index) {
-                                                  isSelected[buttonIndex] = !isSelected[buttonIndex];
+                                                  isSelected[buttonIndex] =
+                                                      !isSelected[buttonIndex];
                                                 } else {
-                                                  isSelected[buttonIndex] = false;
+                                                  isSelected[buttonIndex] =
+                                                      false;
                                                 }
                                               }
                                             });
@@ -795,8 +682,7 @@ class _HomePageState extends State<HomePage> {
                                                 ),
                                               ),
                                             )
-                                          ])
-                                      )),
+                                          ]))),
                             ]),
                             const SizedBox(height: 15),
                             AspectRatio(
@@ -820,43 +706,22 @@ class _HomePageState extends State<HomePage> {
                                       left: 10.0,
                                       top: 20,
                                       bottom: 12),
-                                  // child: LineChart(
-                                  //       showAvg ? avgData() : mainData(),
-                                  // ),
                                   child: FutureBuilder(
-                                    future: yearDataset, 
-                                    builder: (context, snapshot) {
-                                      if (snapshot.hasData) {
-                                        //return LineChart(mainData(snapshot, '5years'));
-                                        return LineChart(mainData(snapshot, '12months'));
-                                      } else if (snapshot.hasError) {
-                                        return Text("${snapshot.error}");
-                                      }
-                                      return const CircularProgressIndicator();
-                                    }
-                                  ),
+                                      future: yearDataset,
+                                      builder: (context, snapshot) {
+                                        if (snapshot.hasData) {
+                                          //return LineChart(mainData(snapshot, '5years'));
+                                          return LineChart(
+                                              mainData(snapshot, '12months'));
+                                        } else if (snapshot.hasError) {
+                                          return Text("${snapshot.error}");
+                                        }
+                                        return const CircularProgressIndicator();
+                                      }),
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              width: 60,
-                              height: 34,
-                              child: TextButton(
-                                onPressed: () {
-                                  setState(() {
-                                    showAvg = !showAvg;
-                                  });
-                                },
-                                child: Text(
-                                  'avg',
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      color: showAvg
-                                          ? Colors.white.withOpacity(0.5)
-                                          : Colors.white),
-                                ),
-                              ),
-                            ),
+
                             const SizedBox(height: 15),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -1101,62 +966,174 @@ class _HomePageState extends State<HomePage> {
                                 },
                               ),
                             ),
-                            Container(decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),
-                            color: Colors.white),
-                            child: Text(powerOutput.toString())),
-                            const SizedBox(height: 15),
                             Container(
-                                width: 350,
-                                height: 350,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                child: Card(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(18)),
-                                  color: const Color.fromRGBO(43, 28, 154, 100),
-                                  child: Stack(
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: const EdgeInsets.all(16),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.stretch,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: <Widget>[
-                                            const Text(
-                                              'Estimated Savings',
-                                              style: TextStyle(
-                                                  color: Colors.yellow,
-                                                  fontSize: 24,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            const SizedBox(
-                                              height: 4,
-                                            ),
-                                            Expanded(
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 8.0),
-                                                child: BarChart(
-                                                  mainBarData(),
-                                                  swapAnimationDuration:
-                                                      animDuration,
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 12,
-                                            ),
-                                          ],
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: Colors.white),
+                                child: Text(powerOutput.toString())),
+                            const SizedBox(height: 15),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Container(
+                                    width: 170,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    child: const Padding(
+                                      child: TextField(
+                                        decoration: InputDecoration(
+                                          labelText: 'Time Range',
+                                          icon: Icon(Icons.event),
                                         ),
                                       ),
-                                    ],
+                                      padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                                    ),
                                   ),
-                                )),
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                  child: Container(
+                                    width: 160,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8.0),
+                                      child: DropdownButton(
+                                        isExpanded: true,
+                                        iconEnabledColor: Colors.white,
+                                        style: const TextStyle(
+                                            color: Colors.blue, fontSize: 17),
+                                        dropdownColor: const Color(0xFF5036D5),
+                                        focusColor: Colors.blue,
+                                        value: initialTimeRange,
+                                        icon: const Icon(
+                                            Icons.keyboard_arrow_down, color: Colors.blue),
+                                        items: time_range.map((String items) {
+                                          return DropdownMenuItem(
+                                              value: items,
+                                              child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          45, 0, 0, 0),
+                                                  child: Text(items)));
+                                        }).toList(),
+                                        onChanged: (String? newValue) {
+                                          setState(() {
+                                            initialTimeRange = newValue!;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.8,
+                              height: 300,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                gradient: const LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  stops: [0.1, 0.4, 0.7, 0.9],
+                                  colors: [
+                                    Color(0xFF3594DD),
+                                    Color(0xFF4563DB),
+                                    Color(0xFF5036D5),
+                                    Color(0xFF5B16D0),
+                                  ],
+                                ),
+                              ),
+                              child: Column(children: <Widget>[
+                                const SizedBox(height: 30),
+                                Row(children: const [
+                                  // Align(
+                                  //         child: Icon(Icons.attach_money, size:30, color: Colors.white,)),
+                                  Expanded(
+                                    child: Align(
+                                        alignment: Alignment.topCenter,
+                                        child: Text("Estimated Savings:",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                color: Colors.white))),
+                                  ),
+                                ]),
+                                const SizedBox(height: 70),
+                                Text("$saving USD",
+                                    style: const TextStyle(
+                                      fontSize: 50,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    )),
+                              ]),
+                            ),
+                            // Container(
+                            //     width: 350,
+                            //     height: 350,
+                            //     decoration: BoxDecoration(
+                            //       borderRadius: BorderRadius.circular(30),
+                            //     ),
+                            //     child: Card(
+                            //       shape: RoundedRectangleBorder(
+                            //           borderRadius: BorderRadius.circular(18)),
+                            //       color: const Color.fromRGBO(43, 28, 154, 100),
+                            //       child: Stack(
+                            //         children: <Widget>[
+                            //           Padding(
+                            //             padding: const EdgeInsets.all(16),
+                            //             child: Column(
+                            //               crossAxisAlignment:
+                            //                   CrossAxisAlignment.stretch,
+                            //               mainAxisAlignment:
+                            //                   MainAxisAlignment.start,
+                            //               mainAxisSize: MainAxisSize.max,
+                            //               children: <Widget>[
+                            //                 const Text(
+                            //                   'Estimated Savings',
+                            //                   style: TextStyle(
+                            //                       color: Colors.yellow,
+                            //                       fontSize: 24,
+                            //                       fontWeight: FontWeight.bold),
+                            //                 ),
+                            //                 const SizedBox(
+                            //                   height: 4,
+                            //                 ),
+                            //                 Expanded(
+                            //                   child: Padding(
+                            //                     padding:
+                            //                         const EdgeInsets.symmetric(
+                            //                             horizontal: 8.0),
+                            //                     child: BarChart(
+                            //                       mainBarData(),
+                            //                       swapAnimationDuration:
+                            //                           animDuration,
+                            //                     ),
+                            //                   ),
+                            //                 ),
+                            //                 const SizedBox(
+                            //                   height: 12,
+                            //                 ),
+                            //               ],
+                            //             ),
+                            //           ),
+                            //         ],
+                            //       ),
+                            //     )),
                             const SizedBox(
                               height: 30,
                             ),
