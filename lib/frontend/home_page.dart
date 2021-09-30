@@ -722,7 +722,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
 
-                            const SizedBox(height: 15),
+                            const SizedBox(height: 20),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -897,13 +897,14 @@ class _HomePageState extends State<HomePage> {
                                             child: Column(
                                               children: [
                                                 Image.asset(
-                                                  "assets/images/uv.png",
+                                                  "assets/images/cloud.png",
                                                   width: 64.0,
+                                                  height: 64.0,
                                                 ),
                                                 const SizedBox(
                                                   height: 10.0,
                                                 ),
-                                                const Text("Cloud Around",
+                                                const Text("Clouds",
                                                     style: TextStyle(
                                                         color: Colors.white,
                                                         fontWeight:
@@ -927,7 +928,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 15),
+                            const SizedBox(height: 20),
                             Container(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 20),
@@ -945,7 +946,7 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   borderRadius: BorderRadius.circular(20)),
                               margin:
-                                  const EdgeInsets.symmetric(horizontal: 20),
+                                  const EdgeInsets.symmetric(horizontal: 5),
                               child: DropdownButton(
                                 isExpanded: true,
                                 iconEnabledColor: Colors.white,

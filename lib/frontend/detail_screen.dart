@@ -61,7 +61,7 @@ class DetailsScreen extends StatelessWidget {
                             children: [
                               const Padding(
                                 padding: EdgeInsets.only(left: 20),
-                                child: Text("How does Shine works?",
+                                child: Text("What is Shine?",
                                     style: TextStyle(
                                         fontSize: 24,
                                         color: Colors.white,
