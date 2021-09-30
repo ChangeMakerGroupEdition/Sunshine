@@ -71,7 +71,7 @@ class DetailsScreen extends StatelessWidget {
                               const Padding(
                                 padding: EdgeInsets.only(left: 20, right: 25),
                                 child: Text(
-                                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.",
+                                    "Shine is a mobile application designed to be user-friendly for anyone to access useful information about the sunshine. It comes with a clean design that elevates the user experience by providing a well-organized dashboard packed with all the information that our users need. There’s solar irradiance, wind speed, temperature, humidity and so much more just on a single page. ",
                                     style: TextStyle(
                                       fontSize: 15,
                                       color: Colors.white70,
@@ -84,12 +84,12 @@ class DetailsScreen extends StatelessWidget {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: const [
-                                    Text('Examples',
+                                    Text('How does it works?',
                                         style: TextStyle(
                                           fontSize: 18,
                                           color: Colors.white,
                                         )),
-                                    Text('69',
+                                    Text('01',
                                         style: TextStyle(
                                           fontSize: 17,
                                           color: Colors.white38,
@@ -100,7 +100,7 @@ class DetailsScreen extends StatelessWidget {
                               const Padding(
                                 padding: EdgeInsets.only(left: 20, right: 25),
                                 child: Text(
-                                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not. Hi Yoyoyoyo",
+                                    "Once we clicked into the app, we could see a gorgeous opening screen and some introduction. After you click “Done”, it will bring you to our main page and automatically detect your location. Now you have your location, now here’s the most important data: Solar Irradiance. And moving on, you can access info like wind speed, temperature, humidity and cloud around in this clean interface.",
                                     style: TextStyle(
                                       fontSize: 15,
                                       color: Colors.white70,
@@ -110,7 +110,7 @@ class DetailsScreen extends StatelessWidget {
                               const Padding(
                                 padding: EdgeInsets.only(left: 20, right: 25),
                                 child: Text(
-                                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries. Hi Yoyoyoyo",
+                                    "We know our users care about money too, that’s why we added this estimated savings at the end of our main page. We perform some calculations by calculating the amount generated with your efficiency of solar panels and solar irradiance. It’s so much easier to access now!",
                                     style: TextStyle(
                                       fontSize: 15,
                                       color: Colors.white70,
