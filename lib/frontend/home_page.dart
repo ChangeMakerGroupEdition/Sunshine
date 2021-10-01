@@ -42,7 +42,6 @@ class _HomePageState extends State<HomePage> {
   double efficiency = 0;
   String initialTimeRange = "Week";
   int saving = 300;
-
   var itemList = [
     'Select Panel',
     'SunPower Maxeon 3',
@@ -390,9 +389,7 @@ class _HomePageState extends State<HomePage> {
           reservedSize: 22,
           interval: 1,
           getTextStyles: (context, value) => const TextStyle(
-              color: Colors.grey,
-              fontWeight: FontWeight.bold,
-              fontSize: 16),
+              color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 16),
           getTitles: (value) {
             switch (value.toInt()) {
               case 2:
@@ -490,9 +487,7 @@ class _HomePageState extends State<HomePage> {
           reservedSize: 22,
           interval: 1,
           getTextStyles: (context, value) => const TextStyle(
-              color: Colors.grey,
-              fontWeight: FontWeight.bold,
-              fontSize: 16),
+              color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 16),
           getTitles: (value) {
             switch (value.toInt()) {
               case 0:
@@ -564,6 +559,7 @@ class _HomePageState extends State<HomePage> {
       ],
     );
   }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -622,7 +618,7 @@ class _HomePageState extends State<HomePage> {
                                   'Solar Irradiance (W/m^2)',
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 16,
+                                      fontSize: 14,
                                       color: Colors.white),
                                   textAlign: TextAlign.left,
                                 ),
@@ -654,7 +650,7 @@ class _HomePageState extends State<HomePage> {
                                           },
                                           children: const <Widget>[
                                             Padding(
-                                              padding: EdgeInsets.all(15.0),
+                                              padding: EdgeInsets.all(10.0),
                                               child: Text(
                                                 "Daily",
                                                 style: TextStyle(
@@ -665,7 +661,7 @@ class _HomePageState extends State<HomePage> {
                                               ),
                                             ),
                                             Padding(
-                                              padding: EdgeInsets.all(15.0),
+                                              padding: EdgeInsets.all(10.0),
                                               child: Text(
                                                 "Yearly",
                                                 style: TextStyle(
@@ -697,36 +693,38 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                   ),
                                   child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        right: 10.0,
-                                        left: 10.0,
-                                        top: 20,
-                                        bottom: 12),
-                                    child: isSelected[1] == true ? FutureBuilder(
-                                        future: yearDataset,
-                                        builder: (context, snapshot) {
-                                          if (snapshot.hasData) {
-                                            //return LineChart(mainData(snapshot, '5years'));
-                                            return LineChart(
-                                                yearGraph(snapshot));
-                                          } else if (snapshot.hasError) {
-                                            return Text("${snapshot.error}");
-                                          }
-                                          return const CircularProgressIndicator();
-                                        })
-                                        : FutureBuilder(
-                                        future: hourDataset,
-                                        builder: (context, snapshot) {
-                                          if (snapshot.hasData) {
-                                            //return LineChart(mainData(snapshot, '5years'));
-                                            return LineChart(
-                                                dayGraph(snapshot));
-                                          } else if (snapshot.hasError) {
-                                            return Text("${snapshot.error}");
-                                          }
-                                          return const CircularProgressIndicator();
-                                        })
-                                  ),
+                                      padding: const EdgeInsets.only(
+                                          right: 10.0,
+                                          left: 10.0,
+                                          top: 20,
+                                          bottom: 12),
+                                      child: isSelected[1] == true
+                                          ? FutureBuilder(
+                                              future: yearDataset,
+                                              builder: (context, snapshot) {
+                                                if (snapshot.hasData) {
+                                                  //return LineChart(mainData(snapshot, '5years'));
+                                                  return LineChart(
+                                                      yearGraph(snapshot));
+                                                } else if (snapshot.hasError) {
+                                                  return Text(
+                                                      "${snapshot.error}");
+                                                }
+                                                return const CircularProgressIndicator();
+                                              })
+                                          : FutureBuilder(
+                                              future: hourDataset,
+                                              builder: (context, snapshot) {
+                                                if (snapshot.hasData) {
+                                                  //return LineChart(mainData(snapshot, '5years'));
+                                                  return LineChart(
+                                                      dayGraph(snapshot));
+                                                } else if (snapshot.hasError) {
+                                                  return Text(
+                                                      "${snapshot.error}");
+                                                }
+                                                return const CircularProgressIndicator();
+                                              })),
                                 ),
                               ),
                             ),
@@ -763,37 +761,30 @@ class _HomePageState extends State<HomePage> {
                                               0.4,
                                           height: 160.0,
                                           child: Padding(
-                                            padding: const EdgeInsets.all(18.0),
-                                            child:  Column(
-                                                children: [
-                                                  Image.asset(
-                                                    "assets/images/wind.png",
-                                                    width: 64.0,
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 10.0,
-                                                  ),
-                                                  const Text("Wind Speed",
-                                                      style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 20.0)),
-                                                  const SizedBox(
-                                                    height: 5.0,
-                                                  ),
-                                                  FutureBuilder<YearRangeDataset>(
-                                                    future: yearDataset,
-                                                    builder: (context, snapshot) {
-                                                      if(snapshot.hasData) {
-                                                        return Text(snapshot.data!.windSpeed.values[64].toString() + " m/s",
-                                                          style: const TextStyle(
-                                                              color: Colors.white,
-                                                              fontWeight: FontWeight.w400));
-                                                      } else {
-                                                        return const CircularProgressIndicator();
-                                                      }
-                                                })
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Column(
+                                              children: [
+                                                Image.asset(
+                                                  "assets/images/wind.png",
+                                                  width: 64.0,
+                                                ),
+                                                const SizedBox(
+                                                  height: 10.0,
+                                                ),
+                                                const Text("Wind Speed",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 20.0)),
+                                                const SizedBox(
+                                                  height: 5.0,
+                                                ),
+                                                const Text("69 mph",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.w400))
                                               ],
                                             ),
                                           ),
@@ -820,7 +811,7 @@ class _HomePageState extends State<HomePage> {
                                               0.4,
                                           height: 160.0,
                                           child: Padding(
-                                            padding: const EdgeInsets.all(18.0),
+                                            padding: const EdgeInsets.all(8.0),
                                             child: Column(
                                               children: [
                                                 Image.asset(
@@ -839,18 +830,11 @@ class _HomePageState extends State<HomePage> {
                                                 const SizedBox(
                                                   height: 5.0,
                                                 ),
-                                                FutureBuilder<YearRangeDataset>(
-                                                    future: yearDataset,
-                                                    builder: (context, snapshot) {
-                                                      if(snapshot.hasData) {
-                                                        return Text(snapshot.data!.temperature.values[64].toString() + " °c",
-                                                          style: const TextStyle(
-                                                              color: Colors.white,
-                                                              fontWeight: FontWeight.w400));
-                                                      } else {
-                                                        return const CircularProgressIndicator();
-                                                      }
-                                                })
+                                                const Text("69°C",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.w400))
                                               ],
                                             ),
                                           ),
@@ -877,7 +861,7 @@ class _HomePageState extends State<HomePage> {
                                               0.4,
                                           height: 160.0,
                                           child: Padding(
-                                            padding: const EdgeInsets.all(18.0),
+                                            padding: const EdgeInsets.all(8.0),
                                             child: Column(
                                               children: [
                                                 Image.asset(
@@ -896,19 +880,12 @@ class _HomePageState extends State<HomePage> {
                                                 const SizedBox(
                                                   height: 5.0,
                                                 ),
-                                                FutureBuilder<YearRangeDataset>(
-                                                    future: yearDataset,
-                                                    builder: (context, snapshot) {
-                                                      if(snapshot.hasData) {
-                                                        return Text(snapshot.data!.humidity.values[64].toString() + " g/kg",
-                                                          style: const TextStyle(
-                                                              color: Colors.white,
-                                                              fontWeight: FontWeight.w400));
-                                                      } else {
-                                                        return const CircularProgressIndicator();
-                                                      }
-                                                })
-                                              ]
+                                                const Text("69 g/kg",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.w400))
+                                              ],
                                             ),
                                           ),
                                         ),
@@ -934,7 +911,7 @@ class _HomePageState extends State<HomePage> {
                                               0.4,
                                           height: 160.0,
                                           child: Padding(
-                                            padding: const EdgeInsets.all(18.0),
+                                            padding: const EdgeInsets.all(8.0),
                                             child: Column(
                                               children: [
                                                 Image.asset(
@@ -945,7 +922,7 @@ class _HomePageState extends State<HomePage> {
                                                 const SizedBox(
                                                   height: 10.0,
                                                 ),
-                                                const Text("Cloud Around",
+                                                const Text("Cloud Amount",
                                                     style: TextStyle(
                                                         color: Colors.white,
                                                         fontWeight:
@@ -954,19 +931,12 @@ class _HomePageState extends State<HomePage> {
                                                 const SizedBox(
                                                   height: 5.0,
                                                 ),
-                                                FutureBuilder<YearRangeDataset>(
-                                                  future: yearDataset,
-                                                  builder: (context, snapshot) {
-                                                    if(snapshot.hasData) {
-                                                      return Text(snapshot.data!.humidity.values[64].toString() + " %",
-                                                        style: const TextStyle(
-                                                            color: Colors.white,
-                                                            fontWeight: FontWeight.w400));
-                                                    } else {
-                                                      return const CircularProgressIndicator();
-                                                    }
-                                                })
-                                              ]
+                                                const Text("69 mW/cm2",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.w400))
+                                              ],
                                             ),
                                           ),
                                         )
@@ -1049,6 +1019,7 @@ class _HomePageState extends State<HomePage> {
                                           child: const Align(
                                             alignment: Alignment.center,
                                             child: TextField(
+                                              obscureText: true,
                                               style: TextStyle(
                                                   color: Colors.white),
                                               decoration: InputDecoration(
