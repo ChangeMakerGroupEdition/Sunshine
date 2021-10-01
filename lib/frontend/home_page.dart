@@ -68,17 +68,17 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  AssetImage image1 = const AssetImage('assets/solarpanel/sunpower.jpg');
-  Image image2 = Image.network(
-      'https://www.lg.com/global/images/business/Q1C-A6/1100-01.jpg');
-  AssetImage image3 = const AssetImage('assets/solarpanel/recalpha.png');
-  AssetImage image4 = const AssetImage('assets/solarpanel/panasonic.png');
-  AssetImage image5 = const AssetImage('assets/solarpanel/sil.jpg');
-  AssetImage image6 = const AssetImage('assets/solarpanel/Tiger.jpg');
-  AssetImage image7 = const AssetImage('assets/solarpanel/futuresun.png');
-  AssetImage image8 = const AssetImage('assets/solarpanel/Hyundai.jpg');
-  AssetImage image9 = const AssetImage('assets/solarpanel/trina.png');
-  AssetImage image10 = const AssetImage('assets/solarpanel/spic.jpg');
+  // AssetImage image1 = const AssetImage('assets/solarpanel/sunpower.jpg');
+  // Image image2 = Image.network(
+  //     'https://www.lg.com/global/images/business/Q1C-A6/1100-01.jpg');
+  // AssetImage image3 = const AssetImage('assets/solarpanel/recalpha.png');
+  // AssetImage image4 = const AssetImage('assets/solarpanel/panasonic.png');
+  // AssetImage image5 = const AssetImage('assets/solarpanel/sil.jpg');
+  // AssetImage image6 = const AssetImage('assets/solarpanel/Tiger.jpg');
+  // AssetImage image7 = const AssetImage('assets/solarpanel/futuresun.png');
+  // AssetImage image8 = const AssetImage('assets/solarpanel/Hyundai.jpg');
+  // AssetImage image9 = const AssetImage('assets/solarpanel/trina.png');
+  // AssetImage image10 = const AssetImage('assets/solarpanel/spic.jpg');
 
   downButtonFunction() async {
     getDropDownItem();
@@ -555,41 +555,6 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                 ),
-                Container(
-                  width: double.infinity,
-                  height: size.height * 0.35,
-                  decoration: const BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage("assets/images/intropic.png"))),
-                ),
-                const SizedBox(height: 10),
-                Container(
-                  width: 350,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.white),
-                  child: Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: Text(
-                      "Address: $address",
-                      style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    "Latitude: ${_currentPosition.latitude}, Longitude: ${_currentPosition.longitude}",
-                    style: const TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
                 const SizedBox(height: 15),
                 Container(
                     // margin: EdgeInsets.only(top: size.height * 0.5),
@@ -599,29 +564,9 @@ class _HomePageState extends State<HomePage> {
                       color: const Color.fromRGBO(26, 57, 140, 100),
                     ),
                     child: Padding(
-                        padding: const EdgeInsets.all(20),
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: Column(
                           children: <Widget>[
-                            Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                height: 400,
-                                width: MediaQuery.of(context).size.width * 0.9,
-                                child: Stack(children: [
-                                  GoogleMap(
-                                    onMapCreated: _onMapCreated,
-                                    myLocationButtonEnabled: true,
-                                    zoomGesturesEnabled: true,
-                                    onCameraMove: _onCameraMove,
-                                    compassEnabled: true,
-                                    mapType: MapType.hybrid,
-                                    initialCameraPosition: CameraPosition(
-                                      target: _initialcameraposition,
-                                      zoom: 17,
-                                    ),
-                                  ),
-                                ])),
                             const SizedBox(height: 20),
                             Row(children: <Widget>[
                               const Expanded(
@@ -685,43 +630,46 @@ class _HomePageState extends State<HomePage> {
                                           ]))),
                             ]),
                             const SizedBox(height: 15),
-                            AspectRatio(
-                              aspectRatio: 1.20,
-                              child: Container(
-                                decoration: const BoxDecoration(
-                                  gradient: LinearGradient(
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                      colors: [
-                                        Color.fromRGBO(57, 19, 178, 100),
-                                        Color.fromRGBO(52, 28, 255, 100)
-                                      ]),
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(18),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5),
+                              child: AspectRatio(
+                                aspectRatio: 1.20,
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                    gradient: LinearGradient(
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                        colors: [
+                                          Color.fromRGBO(57, 19, 178, 100),
+                                          Color.fromRGBO(52, 28, 255, 100)
+                                        ]),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(18),
+                                    ),
                                   ),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      right: 10.0,
-                                      left: 10.0,
-                                      top: 20,
-                                      bottom: 12),
-                                  child: FutureBuilder(
-                                      future: yearDataset,
-                                      builder: (context, snapshot) {
-                                        if (snapshot.hasData) {
-                                          //return LineChart(mainData(snapshot, '5years'));
-                                          return LineChart(
-                                              mainData(snapshot, '12months'));
-                                        } else if (snapshot.hasError) {
-                                          return Text("${snapshot.error}");
-                                        }
-                                        return const CircularProgressIndicator();
-                                      }),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 10.0,
+                                        left: 10.0,
+                                        top: 20,
+                                        bottom: 12),
+                                    child: FutureBuilder(
+                                        future: yearDataset,
+                                        builder: (context, snapshot) {
+                                          if (snapshot.hasData) {
+                                            //return LineChart(mainData(snapshot, '5years'));
+                                            return LineChart(
+                                                mainData(snapshot, '12months'));
+                                          } else if (snapshot.hasError) {
+                                            return Text("${snapshot.error}");
+                                          }
+                                          return const CircularProgressIndicator();
+                                        }),
+                                  ),
                                 ),
                               ),
                             ),
-
                             const SizedBox(height: 20),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -730,8 +678,8 @@ class _HomePageState extends State<HomePage> {
                                 Expanded(
                                   child: Center(
                                     child: Wrap(
-                                      spacing: 20.0,
-                                      runSpacing: 20.0,
+                                      spacing: 18.0,
+                                      runSpacing: 18.0,
                                       children: [
                                         Container(
                                           decoration: BoxDecoration(
@@ -749,7 +697,10 @@ class _HomePageState extends State<HomePage> {
                                               ],
                                             ),
                                           ),
-                                          width: 160.0,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.4,
                                           height: 160.0,
                                           child: Padding(
                                             padding: const EdgeInsets.all(8.0),
@@ -796,7 +747,10 @@ class _HomePageState extends State<HomePage> {
                                               ],
                                             ),
                                           ),
-                                          width: 160.0,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.4,
                                           height: 160.0,
                                           child: Padding(
                                             padding: const EdgeInsets.all(8.0),
@@ -843,7 +797,10 @@ class _HomePageState extends State<HomePage> {
                                               ],
                                             ),
                                           ),
-                                          width: 160.0,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.4,
                                           height: 160.0,
                                           child: Padding(
                                             padding: const EdgeInsets.all(8.0),
@@ -890,7 +847,10 @@ class _HomePageState extends State<HomePage> {
                                               ],
                                             ),
                                           ),
-                                          width: 160.0,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.4,
                                           height: 160.0,
                                           child: Padding(
                                             padding: const EdgeInsets.all(8.0),
@@ -904,7 +864,7 @@ class _HomePageState extends State<HomePage> {
                                                 const SizedBox(
                                                   height: 10.0,
                                                 ),
-                                                const Text("Clouds",
+                                                const Text("Cloud Around",
                                                     style: TextStyle(
                                                         color: Colors.white,
                                                         fontWeight:
@@ -931,23 +891,21 @@ class _HomePageState extends State<HomePage> {
                             const SizedBox(height: 20),
                             Container(
                               padding:
-                                  const EdgeInsets.symmetric(horizontal: 20),
+                                  const EdgeInsets.symmetric(horizontal: 15),
                               decoration: BoxDecoration(
                                   gradient: const LinearGradient(
-                                    begin: Alignment.topCenter,
-                                    end: Alignment.bottomCenter,
-                                    stops: [0.1, 0.4, 0.7, 0.9],
-                                    colors: [
-                                      Color(0xFF3594DD),
-                                      Color(0xFF4563DB),
-                                      Color(0xFF5036D5),
-                                      Color(0xFF5B16D0),
-                                    ],
-                                  ),
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                      colors: [
+                                        Color.fromRGBO(133, 138, 255, 100),
+                                        Color.fromRGBO(176, 133, 255, 100),
+                                        Color.fromRGBO(192, 133, 255, 100)
+                                      ]),
                                   borderRadius: BorderRadius.circular(20)),
                               margin:
-                                  const EdgeInsets.symmetric(horizontal: 5),
+                                  const EdgeInsets.symmetric(horizontal: 10),
                               child: DropdownButton(
+                                underline: const SizedBox(),
                                 isExpanded: true,
                                 iconEnabledColor: Colors.white,
                                 style: const TextStyle(
@@ -967,174 +925,278 @@ class _HomePageState extends State<HomePage> {
                                 },
                               ),
                             ),
-                            Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: Colors.white),
-                                child: Text(powerOutput.toString())),
                             const SizedBox(height: 15),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Container(
-                                    width: 170,
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    child: const Padding(
-                                      child: TextField(
-                                        decoration: InputDecoration(
-                                          labelText: 'Time Range',
-                                          icon: Icon(Icons.event),
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Expanded(
+                                      child: Center(
+                                    child: Wrap(
+                                      spacing: 15.0,
+                                      runSpacing: 18.0,
+                                      children: [
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 5),
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.4,
+                                          height: 50,
+                                          decoration: BoxDecoration(
+                                              gradient: const LinearGradient(
+                                                  begin: Alignment.topLeft,
+                                                  end: Alignment.bottomRight,
+                                                  colors: [
+                                                    Color.fromRGBO(
+                                                        133, 138, 255, 100),
+                                                    Color.fromRGBO(
+                                                        176, 133, 255, 100),
+                                                    Color.fromRGBO(
+                                                        192, 133, 255, 100)
+                                                  ]),
+                                              borderRadius:
+                                                  BorderRadius.circular(20)),
+                                          child: const Align(
+                                            alignment: Alignment.center,
+                                            child: TextField(
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                              decoration: InputDecoration(
+                                                labelText: 'Time Range',
+                                                labelStyle: TextStyle(
+                                                    color: Colors.white),
+                                                icon: Icon(Icons.event,
+                                                    color: Colors.white),
+                                              ),
+                                            ),
+                                          ),
                                         ),
-                                      ),
-                                      padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                                        Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.4,
+                                          height: 50,
+                                          decoration: BoxDecoration(
+                                              gradient: const LinearGradient(
+                                                  begin: Alignment.topLeft,
+                                                  end: Alignment.bottomRight,
+                                                  colors: [
+                                                    Color.fromRGBO(
+                                                        133, 138, 255, 100),
+                                                    Color.fromRGBO(
+                                                        176, 133, 255, 100),
+                                                    Color.fromRGBO(
+                                                        192, 133, 255, 100)
+                                                  ]),
+                                              borderRadius:
+                                                  BorderRadius.circular(20)),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10),
+                                            child: DropdownButton(
+                                              underline: const SizedBox(),
+                                              isExpanded: true,
+                                              iconEnabledColor: Colors.white,
+                                              style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 17),
+                                              dropdownColor:
+                                                  const Color(0xFF5036D5),
+                                              focusColor: Colors.white,
+                                              value: initialTimeRange,
+                                              icon: const Icon(
+                                                  Icons.keyboard_arrow_down,
+                                                  color: Colors.white),
+                                              items: time_range
+                                                  .map((String items) {
+                                                return DropdownMenuItem(
+                                                    value: items,
+                                                    child: Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Text(items)));
+                                              }).toList(),
+                                              onChanged: (String? newValue) {
+                                                setState(() {
+                                                  initialTimeRange = newValue!;
+                                                });
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ),
+                                  ))
+                                ]),
+                            SizedBox(
+                              width: double.infinity,
+                              height: 475,
+                              child: Stack(children: [
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          0, 130, 0, 0),
+                                      child: Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.85,
+                                          height: 300,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(30),
+                                            gradient: const LinearGradient(
+                                              begin: Alignment.topCenter,
+                                              end: Alignment.bottomCenter,
+                                              stops: [0.1, 0.4, 0.7, 0.9],
+                                              colors: [
+                                                Color(0xFF3594DD),
+                                                Color(0xFF4563DB),
+                                                Color(0xFF5036D5),
+                                                Color(0xFF5B16D0),
+                                              ],
+                                            ),
+                                          ),
+                                          child: Column(children: [
+                                            const SizedBox(height: 45),
+                                            Wrap(
+                                                crossAxisAlignment:
+                                                    WrapCrossAlignment.center,
+                                                children: const [
+                                                  Icon(Icons.paid,
+                                                      color: Colors.yellow),
+                                                  Text(" Estimated Savings:",
+                                                      style: TextStyle(
+                                                          fontSize: 20,
+                                                          color: Colors.white))
+                                                ]),
+                                            const SizedBox(height: 5),
+                                            Text("$saving USD",
+                                                style: const TextStyle(
+                                                  fontSize: 40,
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                )),
+                                            const SizedBox(height: 8),
+                                            Wrap(
+                                                crossAxisAlignment:
+                                                    WrapCrossAlignment.center,
+                                                children: const [
+                                                  Icon(Icons.bolt,
+                                                      color: Colors.yellow),
+                                                  Text(" Power Output",
+                                                      style: TextStyle(
+                                                          fontSize: 20,
+                                                          color: Colors.white))
+                                                ]),
+                                            const SizedBox(height: 5),
+                                            Align(
+                                                alignment: Alignment.center,
+                                                child: Text("$powerOutput W",
+                                                    style: const TextStyle(
+                                                      fontSize: 40,
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ))),
+                                            const SizedBox(height: 8),
+                                            Wrap(
+                                                crossAxisAlignment:
+                                                    WrapCrossAlignment.center,
+                                                children: const [
+                                                  Icon(Icons.gpp_good,
+                                                      color: Colors.yellow),
+                                                  Text(" Efficiency:",
+                                                      style: TextStyle(
+                                                          fontSize: 20,
+                                                          color: Colors.white))
+                                                ]),
+                                            const SizedBox(height: 5),
+                                            Align(
+                                                alignment: Alignment.center,
+                                                child: Text("$efficiency %",
+                                                    style: const TextStyle(
+                                                      fontSize: 40,
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ))),
+                                          ]))),
                                 ),
                                 Padding(
                                   padding:
-                                      const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                      const EdgeInsets.fromLTRB(0, 0, 0, 270),
                                   child: Container(
-                                    width: 160,
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 8.0),
-                                      child: DropdownButton(
-                                        isExpanded: true,
-                                        iconEnabledColor: Colors.white,
-                                        style: const TextStyle(
-                                            color: Colors.blue, fontSize: 17),
-                                        dropdownColor: const Color(0xFF5036D5),
-                                        focusColor: Colors.blue,
-                                        value: initialTimeRange,
-                                        icon: const Icon(
-                                            Icons.keyboard_arrow_down, color: Colors.blue),
-                                        items: time_range.map((String items) {
-                                          return DropdownMenuItem(
-                                              value: items,
-                                              child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.fromLTRB(
-                                                          45, 0, 0, 0),
-                                                  child: Text(items)));
-                                        }).toList(),
-                                        onChanged: (String? newValue) {
-                                          setState(() {
-                                            initialTimeRange = newValue!;
-                                          });
-                                        },
-                                      ),
-                                    ),
+                                    decoration: const BoxDecoration(
+                                        image: DecorationImage(
+                                            image: AssetImage(
+                                                "assets/images/intropic.png"))),
                                   ),
-                                )
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 30,
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width * 0.8,
-                              height: 300,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
-                                gradient: const LinearGradient(
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
-                                  stops: [0.1, 0.4, 0.7, 0.9],
-                                  colors: [
-                                    Color(0xFF3594DD),
-                                    Color(0xFF4563DB),
-                                    Color(0xFF5036D5),
-                                    Color(0xFF5B16D0),
-                                  ],
                                 ),
-                              ),
-                              child: Column(children: <Widget>[
-                                const SizedBox(height: 30),
-                                Row(children: const [
-                                  // Align(
-                                  //         child: Icon(Icons.attach_money, size:30, color: Colors.white,)),
-                                  Expanded(
-                                    child: Align(
-                                        alignment: Alignment.topCenter,
-                                        child: Text("Estimated Savings:",
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.white))),
-                                  ),
-                                ]),
-                                const SizedBox(height: 70),
-                                Text("$saving USD",
-                                    style: const TextStyle(
-                                      fontSize: 50,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                    )),
                               ]),
                             ),
-                            // Container(
-                            //     width: 350,
-                            //     height: 350,
-                            //     decoration: BoxDecoration(
-                            //       borderRadius: BorderRadius.circular(30),
-                            //     ),
-                            //     child: Card(
-                            //       shape: RoundedRectangleBorder(
-                            //           borderRadius: BorderRadius.circular(18)),
-                            //       color: const Color.fromRGBO(43, 28, 154, 100),
-                            //       child: Stack(
-                            //         children: <Widget>[
-                            //           Padding(
-                            //             padding: const EdgeInsets.all(16),
-                            //             child: Column(
-                            //               crossAxisAlignment:
-                            //                   CrossAxisAlignment.stretch,
-                            //               mainAxisAlignment:
-                            //                   MainAxisAlignment.start,
-                            //               mainAxisSize: MainAxisSize.max,
-                            //               children: <Widget>[
-                            //                 const Text(
-                            //                   'Estimated Savings',
-                            //                   style: TextStyle(
-                            //                       color: Colors.yellow,
-                            //                       fontSize: 24,
-                            //                       fontWeight: FontWeight.bold),
-                            //                 ),
-                            //                 const SizedBox(
-                            //                   height: 4,
-                            //                 ),
-                            //                 Expanded(
-                            //                   child: Padding(
-                            //                     padding:
-                            //                         const EdgeInsets.symmetric(
-                            //                             horizontal: 8.0),
-                            //                     child: BarChart(
-                            //                       mainBarData(),
-                            //                       swapAnimationDuration:
-                            //                           animDuration,
-                            //                     ),
-                            //                   ),
-                            //                 ),
-                            //                 const SizedBox(
-                            //                   height: 12,
-                            //                 ),
-                            //               ],
-                            //             ),
-                            //           ),
-                            //         ],
-                            //       ),
-                            //     )),
+                            const SizedBox(height: 10),
+                            Container(
+                              width: 350,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.white),
+                              child: Padding(
+                                padding: const EdgeInsets.all(5),
+                                child: Text(
+                                  "Address: $address",
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                "Latitude: ${_currentPosition.latitude}, Longitude: ${_currentPosition.longitude}",
+                                style: const TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                              height: 400,
+                              width: MediaQuery.of(context).size.width * 0.9,
+                              // child: Stack(children: [
+                              child: ClipRRect(
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(20),
+                                  topRight: Radius.circular(20),
+                                  bottomRight: Radius.circular(20),
+                                  bottomLeft: Radius.circular(20),
+                                ),
+                                child: GoogleMap(
+                                  onMapCreated: _onMapCreated,
+                                  myLocationButtonEnabled: true,
+                                  zoomGesturesEnabled: true,
+                                  onCameraMove: _onCameraMove,
+                                  compassEnabled: true,
+                                  mapType: MapType.hybrid,
+                                  initialCameraPosition: CameraPosition(
+                                    target: _initialcameraposition,
+                                    zoom: 17,
+                                  ),
+                                ),
+                              ),
+                            ),
                             const SizedBox(
                               height: 30,
                             ),
