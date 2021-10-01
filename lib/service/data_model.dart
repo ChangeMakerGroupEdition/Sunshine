@@ -94,15 +94,6 @@ class YearRangeDataset {
   }
 }
 
-// class Combined {
-//   final YearRangeDataset yearData;
-//   final HourlyDataset hourData;
-
-//   Combined({
-//     required this.yearData,
-//     required this.hourData
-//   });
-// }
 
 class HourlyDataset {
   final List<double> dwn;
@@ -114,9 +105,9 @@ class HourlyDataset {
   });
 
   factory HourlyDataset.fromJson(Map<String, dynamic> json) {
-    List<double> dwn = List<double>.filled(15, 0);
-    List<double> cloudAmount = List<double>.filled(15, 0);
-    List<String> hourRange = ["21","22","23","00","01","02","03","04","05","06","07","08","09","10","11"];
+    List<double> dwn = List<double>.filled(16, 0);
+    List<double> cloudAmount = List<double>.filled(16, 0);
+    List<String> hourRange = ["20","21","22","23","00","01","02","03","04","05","06","07","08","09","10","11"];
     json['properties']['parameter'].forEach((key, value) {
       if(key.toString().startsWith("ALLSKY_SFC_SW_DWN")) {
         for (var element in hourRange) {

@@ -359,19 +359,29 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  LineChartData mainData(AsyncSnapshot snapshot, String type) {
+  LineChartData yearGraph(AsyncSnapshot snapshot) {
     List<double> y = snapshot.data.dwn.getLastYearGraph();
     List<FlSpot> spots = List<FlSpot>.generate(y.length, (int index) {
       return FlSpot(index.toDouble(), y[index]);
     });
-    FlTitlesData titles = FlTitlesData();
-
-    if (type == '5years') {
-      List<double> y = snapshot.data.dwn.getFiveYearGraph();
-      List<FlSpot> spots = List<FlSpot>.generate(y.length, (int index) {
-        return FlSpot(index.toDouble(), y[index]);
-      });
-      FlTitlesData titles = FlTitlesData(
+    return LineChartData(
+      gridData: FlGridData(
+        show: true,
+        drawVerticalLine: true,
+        getDrawingHorizontalLine: (value) {
+          return FlLine(
+            color: const Color(0xff37434d),
+            strokeWidth: 1,
+          );
+        },
+        getDrawingVerticalLine: (value) {
+          return FlLine(
+            color: const Color(0xff37434d),
+            strokeWidth: 1,
+          );
+        },
+      ),
+      titlesData: FlTitlesData(
         show: true,
         rightTitles: SideTitles(showTitles: false),
         topTitles: SideTitles(showTitles: false),
@@ -380,59 +390,7 @@ class _HomePageState extends State<HomePage> {
           reservedSize: 22,
           interval: 1,
           getTextStyles: (context, value) => const TextStyle(
-              color: Color(0xff68737d),
-              fontWeight: FontWeight.bold,
-              fontSize: 16),
-          getTitles: (value) {
-            switch (value.toInt()) {
-              case 0:
-                return '2016';
-              case 1:
-                return '2017';
-              case 2:
-                return '2018';
-              case 3:
-                return '2019';
-              case 4:
-                return '2020';
-            }
-            return '';
-          },
-          margin: 8,
-        ),
-        leftTitles: SideTitles(
-          showTitles: true,
-          interval: 1,
-          getTextStyles: (context, value) => const TextStyle(
-            color: Color(0xff67727d),
-            fontWeight: FontWeight.bold,
-            fontSize: 15,
-          ),
-          getTitles: (value) {
-            if (value.toDouble() / 100 == 0) {
-              return value.toString() + " kWh";
-            }
-            return '';
-          },
-          reservedSize: 32,
-          margin: 12,
-        ),
-      );
-    } else if (type == '12months') {
-      List<double> y = snapshot.data.dwn.getLastYearGraph();
-      List<FlSpot> spots = List<FlSpot>.generate(y.length, (int index) {
-        return FlSpot(index.toDouble(), y[index]);
-      });
-      FlTitlesData titles = FlTitlesData(
-        show: true,
-        rightTitles: SideTitles(showTitles: false),
-        topTitles: SideTitles(showTitles: false),
-        bottomTitles: SideTitles(
-          showTitles: true,
-          reservedSize: 22,
-          interval: 1,
-          getTextStyles: (context, value) => const TextStyle(
-              color: Color(0xff68737d),
+              color: Colors.grey,
               fontWeight: FontWeight.bold,
               fontSize: 16),
           getTitles: (value) {
@@ -456,22 +414,60 @@ class _HomePageState extends State<HomePage> {
           showTitles: true,
           interval: 1,
           getTextStyles: (context, value) => const TextStyle(
-            color: Color(0xff67727d),
+            color: Colors.grey,
             fontWeight: FontWeight.bold,
             fontSize: 15,
           ),
           getTitles: (value) {
-            if (value.toDouble() / 100 == 0) {
-              return value.toString() + " kWh";
+            switch (value.toInt()) {
+              case 100:
+                return '100 kWh';
+              case 200:
+                return '200 kWh';
+              case 300:
+                return '300 kWh';
+              case 400:
+                return '400 kWh';
+              case 500:
+                return '500 kWh';
             }
             return '';
           },
           reservedSize: 32,
           margin: 12,
         ),
-      );
-    }
+      ),
+      borderData: FlBorderData(
+          show: true,
+          border: Border.all(color: const Color(0xff37434d), width: 1)),
+      minX: 0,
+      maxX: y.length.toDouble() - 1,
+      minY: 0,
+      maxY: y.reduce(max) + 150,
+      lineBarsData: [
+        LineChartBarData(
+          spots: spots,
+          colors: gradientColors,
+          barWidth: 5,
+          isStrokeCapRound: true,
+          dotData: FlDotData(
+            show: false,
+          ),
+          belowBarData: BarAreaData(
+            show: true,
+            colors:
+                gradientColors.map((color) => color.withOpacity(0.3)).toList(),
+          ),
+        ),
+      ],
+    );
+  }
 
+  LineChartData dayGraph(AsyncSnapshot snapshot) {
+    List<double> y = snapshot.data.dwn;
+    List<FlSpot> spots = List<FlSpot>.generate(y.length, (int index) {
+      return FlSpot(index.toDouble(), y[index]);
+    });
     return LineChartData(
       gridData: FlGridData(
         show: true,
@@ -489,7 +485,64 @@ class _HomePageState extends State<HomePage> {
           );
         },
       ),
-      titlesData: titles,
+      titlesData: FlTitlesData(
+        show: true,
+        rightTitles: SideTitles(showTitles: false),
+        topTitles: SideTitles(showTitles: false),
+        bottomTitles: SideTitles(
+          showTitles: true,
+          reservedSize: 22,
+          interval: 1,
+          getTextStyles: (context, value) => const TextStyle(
+              color: Colors.grey,
+              fontWeight: FontWeight.bold,
+              fontSize: 16),
+          getTitles: (value) {
+            switch (value.toInt()) {
+              case 0:
+                return '4 am';
+              case 5:
+                return '9 am';
+              case 10:
+                return '2 pm';
+              case 15:
+                return '7 pm';
+            }
+            return '';
+          },
+          margin: 8,
+        ),
+        leftTitles: SideTitles(
+          showTitles: true,
+          interval: 1,
+          getTextStyles: (context, value) => const TextStyle(
+            color: Colors.grey,
+            fontWeight: FontWeight.bold,
+            fontSize: 15,
+          ),
+          getTitles: (value) {
+            switch (value.toInt()) {
+              case 100:
+                return '100 kWh';
+              case 200:
+                return '200 kWh';
+              case 300:
+                return '300 kWh';
+              case 400:
+                return '400 kWh';
+              case 500:
+                return '500 kWh';
+              case 600:
+                return '600 kWh';
+              case 700:
+                return '700 kWh';
+            }
+            return '';
+          },
+          reservedSize: 32,
+          margin: 12,
+        ),
+      ),
       borderData: FlBorderData(
           show: true,
           border: Border.all(color: const Color(0xff37434d), width: 1)),
@@ -515,7 +568,6 @@ class _HomePageState extends State<HomePage> {
       ],
     );
   }
-
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -654,18 +706,30 @@ class _HomePageState extends State<HomePage> {
                                         left: 10.0,
                                         top: 20,
                                         bottom: 12),
-                                    child: FutureBuilder(
+                                    child: isSelected[1] == true ? FutureBuilder(
                                         future: yearDataset,
                                         builder: (context, snapshot) {
                                           if (snapshot.hasData) {
                                             //return LineChart(mainData(snapshot, '5years'));
                                             return LineChart(
-                                                mainData(snapshot, '12months'));
+                                                yearGraph(snapshot));
                                           } else if (snapshot.hasError) {
                                             return Text("${snapshot.error}");
                                           }
                                           return const CircularProgressIndicator();
-                                        }),
+                                        })
+                                        : FutureBuilder(
+                                        future: hourDataset,
+                                        builder: (context, snapshot) {
+                                          if (snapshot.hasData) {
+                                            //return LineChart(mainData(snapshot, '5years'));
+                                            return LineChart(
+                                                dayGraph(snapshot));
+                                          } else if (snapshot.hasError) {
+                                            return Text("${snapshot.error}");
+                                          }
+                                          return const CircularProgressIndicator();
+                                        })
                                   ),
                                 ),
                               ),
