@@ -395,16 +395,12 @@ class _HomePageState extends State<HomePage> {
               fontSize: 16),
           getTitles: (value) {
             switch (value.toInt()) {
-              case 0:
-                return 'Jan';
               case 2:
                 return 'Mac';
               case 5:
                 return 'Jun';
               case 8:
                 return 'Sep';
-              case 11:
-                return 'Dec';
             }
             return '';
           },
@@ -421,15 +417,15 @@ class _HomePageState extends State<HomePage> {
           getTitles: (value) {
             switch (value.toInt()) {
               case 100:
-                return '100 kWh';
+                return '100';
               case 200:
-                return '200 kWh';
+                return '200';
               case 300:
-                return '300 kWh';
+                return '300';
               case 400:
-                return '400 kWh';
+                return '400';
               case 500:
-                return '500 kWh';
+                return '500';
             }
             return '';
           },
@@ -523,19 +519,19 @@ class _HomePageState extends State<HomePage> {
           getTitles: (value) {
             switch (value.toInt()) {
               case 100:
-                return '100 kWh';
+                return '100';
               case 200:
-                return '200 kWh';
+                return '200';
               case 300:
-                return '300 kWh';
+                return '300';
               case 400:
-                return '400 kWh';
+                return '400';
               case 500:
-                return '500 kWh';
+                return '500';
               case 600:
-                return '600 kWh';
+                return '600';
               case 700:
-                return '700 kWh';
+                return '700';
             }
             return '';
           },
@@ -623,10 +619,10 @@ class _HomePageState extends State<HomePage> {
                             Row(children: <Widget>[
                               const Expanded(
                                 child: Text(
-                                  'Solar Irradiance',
+                                  'Solar Irradiance (W/m^2)',
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 20,
+                                      fontSize: 16,
                                       color: Colors.white),
                                   textAlign: TextAlign.left,
                                 ),
