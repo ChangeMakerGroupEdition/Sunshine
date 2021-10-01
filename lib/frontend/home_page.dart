@@ -763,30 +763,37 @@ class _HomePageState extends State<HomePage> {
                                               0.4,
                                           height: 160.0,
                                           child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Column(
-                                              children: [
-                                                Image.asset(
-                                                  "assets/images/wind.png",
-                                                  width: 64.0,
-                                                ),
-                                                const SizedBox(
-                                                  height: 10.0,
-                                                ),
-                                                const Text("Wind Speed",
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 20.0)),
-                                                const SizedBox(
-                                                  height: 5.0,
-                                                ),
-                                                const Text("69 mph",
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.w400))
+                                            padding: const EdgeInsets.all(18.0),
+                                            child:  Column(
+                                                children: [
+                                                  Image.asset(
+                                                    "assets/images/wind.png",
+                                                    width: 64.0,
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 10.0,
+                                                  ),
+                                                  const Text("Wind Speed",
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 20.0)),
+                                                  const SizedBox(
+                                                    height: 5.0,
+                                                  ),
+                                                  FutureBuilder<YearRangeDataset>(
+                                                    future: yearDataset,
+                                                    builder: (context, snapshot) {
+                                                      if(snapshot.hasData) {
+                                                        return Text(snapshot.data!.windSpeed.values[64].toString() + " m/s",
+                                                          style: const TextStyle(
+                                                              color: Colors.white,
+                                                              fontWeight: FontWeight.w400));
+                                                      } else {
+                                                        return const CircularProgressIndicator();
+                                                      }
+                                                })
                                               ],
                                             ),
                                           ),
@@ -813,7 +820,7 @@ class _HomePageState extends State<HomePage> {
                                               0.4,
                                           height: 160.0,
                                           child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
+                                            padding: const EdgeInsets.all(18.0),
                                             child: Column(
                                               children: [
                                                 Image.asset(
@@ -832,11 +839,18 @@ class _HomePageState extends State<HomePage> {
                                                 const SizedBox(
                                                   height: 5.0,
                                                 ),
-                                                const Text("69°C",
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.w400))
+                                                FutureBuilder<YearRangeDataset>(
+                                                    future: yearDataset,
+                                                    builder: (context, snapshot) {
+                                                      if(snapshot.hasData) {
+                                                        return Text(snapshot.data!.temperature.values[64].toString() + " °c",
+                                                          style: const TextStyle(
+                                                              color: Colors.white,
+                                                              fontWeight: FontWeight.w400));
+                                                      } else {
+                                                        return const CircularProgressIndicator();
+                                                      }
+                                                })
                                               ],
                                             ),
                                           ),
@@ -863,7 +877,7 @@ class _HomePageState extends State<HomePage> {
                                               0.4,
                                           height: 160.0,
                                           child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
+                                            padding: const EdgeInsets.all(18.0),
                                             child: Column(
                                               children: [
                                                 Image.asset(
@@ -882,12 +896,19 @@ class _HomePageState extends State<HomePage> {
                                                 const SizedBox(
                                                   height: 5.0,
                                                 ),
-                                                const Text("69 g/kg",
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.w400))
-                                              ],
+                                                FutureBuilder<YearRangeDataset>(
+                                                    future: yearDataset,
+                                                    builder: (context, snapshot) {
+                                                      if(snapshot.hasData) {
+                                                        return Text(snapshot.data!.humidity.values[64].toString() + " g/kg",
+                                                          style: const TextStyle(
+                                                              color: Colors.white,
+                                                              fontWeight: FontWeight.w400));
+                                                      } else {
+                                                        return const CircularProgressIndicator();
+                                                      }
+                                                })
+                                              ]
                                             ),
                                           ),
                                         ),
@@ -913,7 +934,7 @@ class _HomePageState extends State<HomePage> {
                                               0.4,
                                           height: 160.0,
                                           child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
+                                            padding: const EdgeInsets.all(18.0),
                                             child: Column(
                                               children: [
                                                 Image.asset(
@@ -933,12 +954,19 @@ class _HomePageState extends State<HomePage> {
                                                 const SizedBox(
                                                   height: 5.0,
                                                 ),
-                                                const Text("69 mW/cm2",
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.w400))
-                                              ],
+                                                FutureBuilder<YearRangeDataset>(
+                                                  future: yearDataset,
+                                                  builder: (context, snapshot) {
+                                                    if(snapshot.hasData) {
+                                                      return Text(snapshot.data!.humidity.values[64].toString() + " %",
+                                                        style: const TextStyle(
+                                                            color: Colors.white,
+                                                            fontWeight: FontWeight.w400));
+                                                    } else {
+                                                      return const CircularProgressIndicator();
+                                                    }
+                                                })
+                                              ]
                                             ),
                                           ),
                                         )
