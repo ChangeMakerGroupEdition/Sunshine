@@ -781,7 +781,7 @@ class _HomePageState extends State<HomePage> {
                                                 const SizedBox(
                                                   height: 5.0,
                                                 ),
-                                                const Text("69 mph",
+                                                const Text("44 mph",
                                                     style: TextStyle(
                                                         color: Colors.white,
                                                         fontWeight:
@@ -831,7 +831,7 @@ class _HomePageState extends State<HomePage> {
                                                 const SizedBox(
                                                   height: 5.0,
                                                 ),
-                                                const Text("69°C",
+                                                const Text("27.2°C",
                                                     style: TextStyle(
                                                         color: Colors.white,
                                                         fontWeight:
