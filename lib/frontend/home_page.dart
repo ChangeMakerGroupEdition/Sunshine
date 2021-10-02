@@ -18,6 +18,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  var _time_value = 1;
+  late TextEditingController textEditingController;
   late LocationData _currentPosition;
   late Marker marker;
   late Location location = Location();
@@ -43,6 +45,9 @@ class _HomePageState extends State<HomePage> {
   String initialTimeRange = "Week";
   int saving = 300;
 
+  var time_range = ['Day', 'Week', 'Month', 'Year'];
+  var time_value = [1, 7, 30, 365];
+
   var itemList = [
     'Select Panel',
     'SunPower Maxeon 3',
@@ -57,7 +62,48 @@ class _HomePageState extends State<HomePage> {
     'SPIC Solar Andromeda',
   ];
 
-  var time_range = ["Week", "Month", "Year"];
+  var solarPanelData = [
+    [
+        400,
+        22.8
+    ],
+    [
+        400,
+        22.1
+    ],
+    [
+        405,
+        21.9
+    ],
+    [
+        380,
+        21.7
+    ],
+    [
+        405,
+        21.4
+    ],
+    [
+        410,
+        21.4
+    ],
+    [
+        360,
+        21.3
+    ],
+    [
+        400,
+        21.3
+    ],
+    [
+        405,
+        21.1
+    ],
+    [
+        355,
+        21.0
+    ]
+  ];
 
   late Future<YearRangeDataset> yearDataset;
   late Future<HourlyDataset> hourDataset;
@@ -80,66 +126,20 @@ class _HomePageState extends State<HomePage> {
   // AssetImage image9 = const AssetImage('assets/solarpanel/trina.png');
   // AssetImage image10 = const AssetImage('assets/solarpanel/spic.jpg');
 
-  downButtonFunction() async {
-    getDropDownItem();
-    switch (currentValue) {
-      case 'Select Panel':
-        break;
-      case 'SunPower Maxeon 3':
-        powerOutput = 400;
-        efficiency = 22.8;
-        break;
-      case 'LG Neon R LG400Q1C-A6':
-        powerOutput = 400;
-        efficiency = 22.1;
-        break;
-      case 'REC Alpha Pure':
-        powerOutput = 405;
-        efficiency = 21.9;
-        break;
-      case 'Panasonic EverVolt':
-        powerOutput = 380;
-        efficiency = 21.7;
-        break;
-      case 'Silfab Solar Elite BK':
-        powerOutput = 405;
-        efficiency = 21.4;
-        break;
-      case 'Jinko Solar Tiger N-type 66TR':
-        powerOutput = 410;
-        efficiency = 21.4;
-        break;
-      case 'FuturaSun FU M Zebra':
-        powerOutput = 360;
-        efficiency = 21.3;
-        break;
-      case 'Hyundai HiE-S400UF':
-        powerOutput = 400;
-        efficiency = 21.3;
-        break;
-      case 'Trina Solar Vertex S':
-        powerOutput = 405;
-        efficiency = 21.1;
-        break;
-      case 'SPIC Solar Andromeda':
-        powerOutput = 355;
-        efficiency = 21.0;
-        break;
-      // default:
-    }
-  }
+  
 
   @override
   void initState() {
     super.initState();
     getLoc();
-    downButtonFunction();
+    textEditingController = TextEditingController();
     hourDataset = fetchHourlyDataset();
     yearDataset = fetchFiveYearDataset();
   }
 
   @override
   void dispose() {
+    textEditingController.dispose();
     _googleMapController.dispose();
     super.dispose();
   }
@@ -1046,12 +1046,15 @@ class _HomePageState extends State<HomePage> {
                                                   ]),
                                               borderRadius:
                                                   BorderRadius.circular(20)),
-                                          child: const Align(
+                                          child: Align(
                                             alignment: Alignment.center,
                                             child: TextField(
-                                              style: TextStyle(
+                                              controller: textEditingController,
+                                              onSubmitted: (input) => _time_value = num.tryParse(input)!.toInt(),
+                                              keyboardType: TextInputType.number,
+                                              style: const TextStyle(
                                                   color: Colors.white),
-                                              decoration: InputDecoration(
+                                              decoration: const InputDecoration(
                                                 labelText: 'Time Range',
                                                 labelStyle: TextStyle(
                                                     color: Colors.white),
@@ -1163,7 +1166,7 @@ class _HomePageState extends State<HomePage> {
                                                           color: Colors.white))
                                                 ]),
                                             const SizedBox(height: 5),
-                                            Text("$saving USD",
+                                            Text("RM " + (solarPanelData[itemList.indexOf(initialValue)][0]*0.18*12*_time_value*time_value[time_range.indexOf(initialTimeRange)]/1000).toStringAsFixed(2), 
                                                 style: const TextStyle(
                                                   fontSize: 40,
                                                   color: Colors.white,
@@ -1184,7 +1187,7 @@ class _HomePageState extends State<HomePage> {
                                             const SizedBox(height: 5),
                                             Align(
                                                 alignment: Alignment.center,
-                                                child: Text("$powerOutput W",
+                                                child: Text(solarPanelData[itemList.indexOf(initialValue)][0].toString() + " W",
                                                     style: const TextStyle(
                                                       fontSize: 40,
                                                       color: Colors.white,
@@ -1206,7 +1209,7 @@ class _HomePageState extends State<HomePage> {
                                             const SizedBox(height: 5),
                                             Align(
                                                 alignment: Alignment.center,
-                                                child: Text("$efficiency %",
+                                                child: Text(solarPanelData[itemList.indexOf(initialValue)][1].toString() + " %",
                                                     style: const TextStyle(
                                                       fontSize: 40,
                                                       color: Colors.white,
