@@ -63,46 +63,16 @@ class _HomePageState extends State<HomePage> {
   ];
 
   var solarPanelData = [
-    [
-        400,
-        22.8
-    ],
-    [
-        400,
-        22.1
-    ],
-    [
-        405,
-        21.9
-    ],
-    [
-        380,
-        21.7
-    ],
-    [
-        405,
-        21.4
-    ],
-    [
-        410,
-        21.4
-    ],
-    [
-        360,
-        21.3
-    ],
-    [
-        400,
-        21.3
-    ],
-    [
-        405,
-        21.1
-    ],
-    [
-        355,
-        21.0
-    ]
+    [400, 22.8],
+    [400, 22.1],
+    [405, 21.9],
+    [380, 21.7],
+    [405, 21.4],
+    [410, 21.4],
+    [360, 21.3],
+    [400, 21.3],
+    [405, 21.1],
+    [355, 21.0]
   ];
 
   late Future<YearRangeDataset> yearDataset;
@@ -125,8 +95,6 @@ class _HomePageState extends State<HomePage> {
   // AssetImage image8 = const AssetImage('assets/solarpanel/Hyundai.jpg');
   // AssetImage image9 = const AssetImage('assets/solarpanel/trina.png');
   // AssetImage image10 = const AssetImage('assets/solarpanel/spic.jpg');
-
-  
 
   @override
   void initState() {
@@ -762,9 +730,9 @@ class _HomePageState extends State<HomePage> {
                                               0.4,
                                           height: 160.0,
                                           child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Column(
-                                              children: [
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Column(children: [
                                                 Image.asset(
                                                   "assets/images/wind.png",
                                                   width: 64.0,
@@ -781,14 +749,29 @@ class _HomePageState extends State<HomePage> {
                                                 const SizedBox(
                                                   height: 5.0,
                                                 ),
-                                                const Text("44 mph",
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.w400))
-                                              ],
-                                            ),
-                                          ),
+                                                FutureBuilder<YearRangeDataset>(
+                                                    future: yearDataset,
+                                                    builder:
+                                                        (context, snapshot) {
+                                                      if (snapshot.hasData) {
+                                                        return Text(
+                                                            snapshot
+                                                                    .data!
+                                                                    .windSpeed
+                                                                    .values[64]
+                                                                    .toString() +
+                                                                " m/s",
+                                                            style: const TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400));
+                                                      } else {
+                                                        return const CircularProgressIndicator();
+                                                      }
+                                                    })
+                                              ])),
                                         ),
                                         Container(
                                           decoration: BoxDecoration(
@@ -831,11 +814,28 @@ class _HomePageState extends State<HomePage> {
                                                 const SizedBox(
                                                   height: 5.0,
                                                 ),
-                                                const Text("27.2°C",
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.w400))
+                                                FutureBuilder<YearRangeDataset>(
+                                                    future: yearDataset,
+                                                    builder:
+                                                        (context, snapshot) {
+                                                      if (snapshot.hasData) {
+                                                        return Text(
+                                                            snapshot
+                                                                    .data!
+                                                                    .temperature
+                                                                    .values[64]
+                                                                    .toString() +
+                                                                " °C",
+                                                            style: const TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400));
+                                                      } else {
+                                                        return const CircularProgressIndicator();
+                                                      }
+                                                    })
                                               ],
                                             ),
                                           ),
@@ -863,31 +863,45 @@ class _HomePageState extends State<HomePage> {
                                           height: 160.0,
                                           child: Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Column(
-                                              children: [
-                                                Image.asset(
-                                                  "assets/images/water.png",
-                                                  width: 64.0,
-                                                ),
-                                                const SizedBox(
-                                                  height: 10.0,
-                                                ),
-                                                const Text("Humidity",
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 20.0)),
-                                                const SizedBox(
-                                                  height: 5.0,
-                                                ),
-                                                const Text("69 g/kg",
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.w400))
-                                              ],
-                                            ),
+                                            child: Column(children: [
+                                              Image.asset(
+                                                "assets/images/water.png",
+                                                width: 64.0,
+                                              ),
+                                              const SizedBox(
+                                                height: 10.0,
+                                              ),
+                                              const Text("Humidity",
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 20.0)),
+                                              const SizedBox(
+                                                height: 5.0,
+                                              ),
+                                              FutureBuilder<YearRangeDataset>(
+                                                  future: yearDataset,
+                                                  builder: (context, snapshot) {
+                                                    if (snapshot.hasData) {
+                                                      return Text(
+                                                          snapshot
+                                                                  .data!
+                                                                  .humidity
+                                                                  .values[64]
+                                                                  .toString() +
+                                                              " g/kg",
+                                                          style: const TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400));
+                                                    } else {
+                                                      return const CircularProgressIndicator();
+                                                    }
+                                                  })
+                                            ]),
                                           ),
                                         ),
                                         Container(
@@ -913,32 +927,46 @@ class _HomePageState extends State<HomePage> {
                                           height: 160.0,
                                           child: Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Column(
-                                              children: [
-                                                Image.asset(
-                                                  "assets/images/cloud.png",
-                                                  width: 64.0,
-                                                  height: 64.0,
-                                                ),
-                                                const SizedBox(
-                                                  height: 10.0,
-                                                ),
-                                                const Text("Cloud Amount",
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 20.0)),
-                                                const SizedBox(
-                                                  height: 5.0,
-                                                ),
-                                                const Text("69 mW/cm2",
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.w400))
-                                              ],
-                                            ),
+                                            child: Column(children: [
+                                              Image.asset(
+                                                "assets/images/cloud.png",
+                                                width: 64.0,
+                                                height: 64.0,
+                                              ),
+                                              const SizedBox(
+                                                height: 10.0,
+                                              ),
+                                              const Text("Cloud Amount",
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 20.0)),
+                                              const SizedBox(
+                                                height: 5.0,
+                                              ),
+                                              FutureBuilder<YearRangeDataset>(
+                                                  future: yearDataset,
+                                                  builder: (context, snapshot) {
+                                                    if (snapshot.hasData) {
+                                                      return Text(
+                                                          snapshot
+                                                                  .data!
+                                                                  .humidity
+                                                                  .values[64]
+                                                                  .toString() +
+                                                              " %",
+                                                          style: const TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400));
+                                                    } else {
+                                                      return const CircularProgressIndicator();
+                                                    }
+                                                  })
+                                            ]),
                                           ),
                                         )
                                       ],
@@ -1021,8 +1049,12 @@ class _HomePageState extends State<HomePage> {
                                             alignment: Alignment.center,
                                             child: TextField(
                                               controller: textEditingController,
-                                              onSubmitted: (input) => _time_value = num.tryParse(input)!.toInt(),
-                                              keyboardType: TextInputType.number,
+                                              onSubmitted: (input) =>
+                                                  _time_value =
+                                                      num.tryParse(input)!
+                                                          .toInt(),
+                                              keyboardType:
+                                                  TextInputType.number,
                                               style: const TextStyle(
                                                   color: Colors.white),
                                               decoration: const InputDecoration(
@@ -1137,7 +1169,20 @@ class _HomePageState extends State<HomePage> {
                                                           color: Colors.white))
                                                 ]),
                                             const SizedBox(height: 5),
-                                            Text("RM " + (solarPanelData[itemList.indexOf(initialValue)][0]*0.18*12*_time_value*time_value[time_range.indexOf(initialTimeRange)]/1000).toStringAsFixed(2), 
+                                            Text(
+                                                "RM " +
+                                                    (solarPanelData[itemList
+                                                                    .indexOf(
+                                                                        initialValue)]
+                                                                [0] *
+                                                            0.18 *
+                                                            12 *
+                                                            _time_value *
+                                                            time_value[time_range
+                                                                .indexOf(
+                                                                    initialTimeRange)] /
+                                                            1000)
+                                                        .toStringAsFixed(2),
                                                 style: const TextStyle(
                                                   fontSize: 40,
                                                   color: Colors.white,
@@ -1158,7 +1203,11 @@ class _HomePageState extends State<HomePage> {
                                             const SizedBox(height: 5),
                                             Align(
                                                 alignment: Alignment.center,
-                                                child: Text(solarPanelData[itemList.indexOf(initialValue)][0].toString() + " W",
+                                                child: Text(
+                                                    solarPanelData[itemList.indexOf(
+                                                                initialValue)][0]
+                                                            .toString() +
+                                                        " W",
                                                     style: const TextStyle(
                                                       fontSize: 40,
                                                       color: Colors.white,
@@ -1180,7 +1229,11 @@ class _HomePageState extends State<HomePage> {
                                             const SizedBox(height: 5),
                                             Align(
                                                 alignment: Alignment.center,
-                                                child: Text(solarPanelData[itemList.indexOf(initialValue)][1].toString() + " %",
+                                                child: Text(
+                                                    solarPanelData[itemList.indexOf(
+                                                                initialValue)][1]
+                                                            .toString() +
+                                                        " %",
                                                     style: const TextStyle(
                                                       fontSize: 40,
                                                       color: Colors.white,
