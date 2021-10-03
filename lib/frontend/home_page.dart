@@ -84,18 +84,6 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  // AssetImage image1 = const AssetImage('assets/solarpanel/sunpower.jpg');
-  // Image image2 = Image.network(
-  //     'https://www.lg.com/global/images/business/Q1C-A6/1100-01.jpg');
-  // AssetImage image3 = const AssetImage('assets/solarpanel/recalpha.png');
-  // AssetImage image4 = const AssetImage('assets/solarpanel/panasonic.png');
-  // AssetImage image5 = const AssetImage('assets/solarpanel/sil.jpg');
-  // AssetImage image6 = const AssetImage('assets/solarpanel/Tiger.jpg');
-  // AssetImage image7 = const AssetImage('assets/solarpanel/futuresun.png');
-  // AssetImage image8 = const AssetImage('assets/solarpanel/Hyundai.jpg');
-  // AssetImage image9 = const AssetImage('assets/solarpanel/trina.png');
-  // AssetImage image10 = const AssetImage('assets/solarpanel/spic.jpg');
-
   @override
   void initState() {
     super.initState();
