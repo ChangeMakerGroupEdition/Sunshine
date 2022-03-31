@@ -1,6 +1,8 @@
-# Shine
+# Sun Shine
 
-A new Flutter mobile app for [Space App Sarawak competition](https://2021.spaceappschallenge.org/challenges/statements/you-are-my-sunshine/details). 
+## Awards and Nominations
+
+Change Maker has received the [**Best Use of Technology**](https://2021.spaceappschallenge.org/challenges/statements/you-are-my-sunshine/teams/change-maker/project) award and created the solution that exemplifies the most innovative use of technology. This repository is the source code of mobile app submission for [NASA Space App competition](https://2021.spaceappschallenge.org/challenges/statements/you-are-my-sunshine/details). 
 
 ![image](./assets/images/Change_Maker.png)
 ## High Level Summary 
